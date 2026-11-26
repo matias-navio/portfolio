@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import RailDiagram from './RailDiagram.astro';
+import HeroCards from './HeroCards.astro';
+import Projects from './Projects.astro';
+import Experience from './Experience.astro';
+import Footer from './Footer.astro';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<Layout lang={lang}>
+  <Nav lang={lang} />
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="wrap hero-copy">
+        <HeroCards lang={lang} />
+        <p class="status"><span class="live" aria-hidden="true"></span>{t.hero.status}</p>
+        <h1 id="hero-h" class="t-display sheen">{t.hero.title}</h1>
+        <p class="lead">{t.hero.lead}</p>
+        <div class="hero-actions">
+          <a class="btn btn-ember" href="#proyectos">{t.hero.cta}</a>
+          <a class="btn btn-ghost" href="#contacto">{t.hero.secondary}</a>
+        </div>
+      </div>
+      <div class="wrap stage">
+        <RailDiagram label={t.hero.diagramLabel} frontNote={t.hero.rails.front} />
+      </div>
+    </section>
+
+    <Projects lang={lang} />
+    <Experience lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  .hero {
+    padding-top: 104px;
+  }
+  @media (min-width: 1081px) {
+    .hero-copy {
+      min-height: 520px;
+    }
+  }
+  .hero-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+  .hero-copy > :not(.hero-cards) {
+    position: relative;
+    z-index: 1;
+  }
+  .hero-copy .t-display {
+    max-width: 18ch;
+    padding-bottom: 0.06em;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-pearl-muted);
+    background: var(--surface-frost-wash);
+    border-radius: var(--radius-buttons);
+    box-shadow: var(--shadow-hairline);
+  }
+  .live {
+    width: 6px;
+    height: 6px;
+    background: var(--color-ember);
+    border-radius: var(--radius-icon);
+    box-shadow: 0 0 8px rgb(255 106 61 / 0.8);
+  }
+  .lead {
+    max-width: 560px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-pearl-muted);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .stage {
+    margin-top: 72px;
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      padding-top: 64px;
+    }
+    .lead {
+      font-size: 16px;
+    }
+    .status {
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+    }
+    .stage {
+      margin-top: 48px;
+    }
+  }
+</style>

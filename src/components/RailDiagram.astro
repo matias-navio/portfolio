@@ -1,0 +1,223 @@
+---
+import Portrait from './Portrait.astro';
+
+interface Props {
+  label: string;
+  frontNote: string;
+}
+const { label, frontNote } = Astro.props;
+
+type Rail = { name: string; note: string; green: boolean };
+
+const left: Rail[] = [
+  { name: 'React', note: frontNote, green: true },
+  { name: 'MercadoPago', note: 'webhooks', green: false },
+  { name: 'Tiendanube', note: 'API', green: false },
+];
+const right: Rail[] = [
+  { name: 'Spring Boot', note: 'Java 17', green: true },
+  { name: 'NestJS', note: 'TypeScript', green: true },
+  { name: 'PostgreSQL', note: 'SQL', green: false },
+];
+
+const R = 12;
+
+/** Horizontal → vertical → horizontal rail with rounded corners. */
+function railH(x0: number, y0: number, x1: number, y1: number, mx: number) {
+  if (y0 === y1) return `M${x0} ${y0} H${x1}`;
+  const d = x1 > x0 ? 1 : -1;
+  const s = y1 > y0 ? 1 : -1;
+  return `M${x0} ${y0} H${mx - d * R} Q${mx} ${y0} ${mx} ${y0 + s * R} V${y1 - s * R} Q${mx} ${y1} ${mx + d * R} ${y1} H${x1}`;
+}
+
+/** Vertical → horizontal → vertical rail with rounded corners. */
+function railV(x0: number, y0: number, x1: number, y1: number, my: number) {
+  if (x0 === x1) return `M${x0} ${y0} V${y1}`;
+  const d = y1 > y0 ? 1 : -1;
+  const s = x1 > x0 ? 1 : -1;
+  return `M${x0} ${y0} V${my - d * R} Q${x0} ${my} ${x0 + s * R} ${my} H${x1 - s * R} Q${x1} ${my} ${x1} ${my + d * R} V${y1}`;
+}
+
+/* Desktop geometry: 1200 × 360 */
+const D = { w: 1200, h: 360, cx: 600, cy: 180, node: 148, lw: 176, lh: 36 };
+const rows = [60, 180, 300];
+const entries = [-14, 0, 14];
+const desktop = [
+  ...left.map((r, i) => {
+    const x0 = 40 + D.lw;
+    const y = rows[i];
+    return {
+      ...r,
+      box: { x: 40, y: y - D.lh / 2 },
+      start: { x: x0, y },
+      path: railH(x0, y, D.cx - D.node / 2, D.cy + entries[i], i === 0 ? 400 : 430),
+      noteAt: { x: x0 + 20, y: y - 10, anchor: 'start' },
+    };
+  }),
+  ...right.map((r, i) => {
+    const x0 = D.w - 40 - D.lw;
+    const y = rows[i];
+    return {
+      ...r,
+      box: { x: x0, y: y - D.lh / 2 },
+      start: { x: x0, y },
+      path: railH(x0, y, D.cx + D.node / 2, D.cy + entries[i], i === 0 ? 800 : 770),
+      noteAt: { x: x0 - 20, y: y - 10, anchor: 'end' },
+    };
+  }),
+];
+
+/* Mobile geometry: 360 × 440 */
+const M = { w: 360, h: 440, cx: 180, cy: 220, node: 116, lw: 108, lh: 34 };
+const cols = [54, 180, 306];
+const mobile = [
+  ...left.map((r, i) => {
+    const x = cols[i];
+    const y0 = 16 + M.lh;
+    return {
+      ...r,
+      box: { x: x - M.lw / 2, y: 16 },
+      start: { x, y: y0 },
+      path: railV(x, y0, M.cx + entries[i], M.cy - M.node / 2, 110),
+    };
+  }),
+  ...right.map((r, i) => {
+    const x = cols[i];
+    const y0 = M.h - 16 - M.lh;
+    return {
+      ...r,
+      box: { x: x - M.lw / 2, y: y0 },
+      start: { x, y: y0 },
+      path: railV(x, y0, M.cx + entries[i], M.cy + M.node / 2, 330),
+    };
+  }),
+];
+---
+
+<figure class="rail" role="img" aria-label={label}>
+  <svg class="desktop" viewBox={`0 0 ${D.w} ${D.h}`} aria-hidden="true">
+    {desktop.map((r) => <path class:list={['line', { green: r.green }]} d={r.path} />)}
+    {desktop.filter((r) => r.green).map((r) => <path class="pulse" d={r.path} />)}
+    {
+      desktop.map((r) => (
+        <g>
+          <rect class="chip" x={r.box.x} y={r.box.y} width={D.lw} height={D.lh} rx="18" />
+          <text class="chip-text" x={r.box.x + D.lw / 2} y={r.box.y + D.lh / 2}>{r.name}</text>
+          <circle class:list={['dot', { green: r.green }]} cx={r.start.x} cy={r.start.y} r="3" />
+          <text class="note" x={r.noteAt.x} y={r.noteAt.y} text-anchor={r.noteAt.anchor}>{r.note}</text>
+        </g>
+      ))
+    }
+    <Portrait cx={D.cx} cy={D.cy} size={D.node} id="d" />
+  </svg>
+
+  <svg class="mobile" viewBox={`0 0 ${M.w} ${M.h}`} aria-hidden="true">
+    {mobile.map((r) => <path class:list={['line', { green: r.green }]} d={r.path} />)}
+    {mobile.filter((r) => r.green).map((r) => <path class="pulse" d={r.path} />)}
+    {
+      mobile.map((r) => (
+        <g>
+          <rect class="chip" x={r.box.x} y={r.box.y} width={M.lw} height={M.lh} rx="17" />
+          <text class="chip-text small" x={r.box.x + M.lw / 2} y={r.box.y + M.lh / 2}>{r.name}</text>
+          <circle class:list={['dot', { green: r.green }]} cx={r.start.x} cy={r.start.y} r="3" />
+        </g>
+      ))
+    }
+    <Portrait cx={M.cx} cy={M.cy} size={M.node} id="m" />
+  </svg>
+</figure>
+
+<style>
+  .rail {
+    position: relative;
+    margin: 0;
+    padding: 24px 0;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .mobile {
+    display: none;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+  @media (max-width: 720px) {
+    .desktop {
+      display: none;
+    }
+    .mobile {
+      display: block;
+    }
+  }
+
+  .line {
+    fill: none;
+    stroke: rgb(170 190 255 / 0.14);
+    stroke-width: 1.25;
+  }
+  .line.green {
+    stroke: rgb(143 169 255 / 0.32);
+  }
+  .pulse {
+    fill: none;
+    stroke: var(--color-ember);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 14 600;
+    stroke-dashoffset: 614;
+    filter: drop-shadow(0 0 4px rgb(255 106 61 / 0.9));
+    animation: travel 3.6s linear infinite;
+  }
+  .pulse:nth-of-type(2n) {
+    animation-delay: -1.2s;
+  }
+  .pulse:nth-of-type(3n) {
+    animation-delay: -2.4s;
+  }
+  @keyframes travel {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse {
+      display: none;
+    }
+  }
+
+  .chip {
+    fill: rgb(9 21 52 / 0.92);
+    stroke: rgb(170 190 255 / 0.16);
+    stroke-width: 1;
+  }
+  .chip-text {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 14px;
+    fill: var(--color-pearl-body);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+  .chip-text.small {
+    font-size: 12.5px;
+  }
+  .note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    fill: var(--color-pearl-dim);
+  }
+  .dot {
+    fill: var(--color-canvas);
+    stroke: rgb(170 190 255 / 0.3);
+    stroke-width: 1.25;
+  }
+  .dot.green {
+    fill: var(--color-sapphire-light);
+    stroke: none;
+  }
+</style>

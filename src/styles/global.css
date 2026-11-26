@@ -1,0 +1,387 @@
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/inter';
+@import '@fontsource/jetbrains-mono/400.css';
+
+/* Tokens — see DESIGN.md. Palette: deep sapphire (primary) · pearl white (secondary) · ember orange (accent) */
+:root {
+  color-scheme: dark;
+
+  /* Deep sapphire — canvas, surfaces, glows */
+  --color-canvas: #061029;
+  --color-sapphire-deep: #0b1a42;
+  --color-steel-plate: #16275a;
+  --color-sapphire: #2d5fe6;
+  --color-sapphire-light: #8fa9ff;
+
+  /* Pearl white — text, from headline to helper copy */
+  --color-pearl: #f7f3ec;
+  --color-pearl-body: #e6e1d8;
+  --color-pearl-muted: #c4c4cf;
+  --color-pearl-dim: #9299b3;
+  --gradient-pearl: linear-gradient(180deg, #fffdf8 0%, #e9e2d4 100%);
+  --color-pure-white: #ffffff;
+
+  /* Ember orange — the single accent: primary CTAs, highlights, live signals */
+  --color-ember: #ff6a3d;
+  --color-ember-soft: rgb(255 106 61 / 0.12);
+  --color-ember-edge: rgb(255 106 61 / 0.38);
+
+  --color-glass-edge: rgb(170 190 255 / 0.14);
+  --color-glass-edge-strong: rgb(170 190 255 / 0.28);
+  --color-luminous-fill: rgb(170 190 255 / 0.12);
+  --surface-frosted-glass: rgb(120 150 255 / 0.05);
+  --surface-frost-wash: rgb(170 190 255 / 0.07);
+  --surface-deep-glass: rgb(9 21 52 / 0.96);
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --page-max-width: 1200px;
+  --gutter: 24px;
+  --section-gap: 120px;
+  --card-padding: 24px;
+  --element-gap: 16px;
+
+  --radius-cards: 16px;
+  --radius-badges: 6px;
+  --radius-buttons: 999px;
+  --radius-icon: 9999px;
+
+  --shadow-hairline: inset 0 0 0 1px var(--color-glass-edge);
+  --shadow-hairline-strong: inset 0 0 0 1px var(--color-glass-edge-strong);
+  --shadow-feature-card: inset 0 1px 1px rgb(170 190 255 / 0.12), inset 0 24px 48px rgb(170 190 255 / 0.05),
+    0 24px 32px rgb(3 8 22 / 0.7);
+  --shadow-modal-card: inset 0 1px 1px rgb(247 243 236 / 0.2), inset 0 24px 48px rgb(120 150 255 / 0.06),
+    0 16px 32px rgb(0 0 0 / 0.3);
+  --shadow-badge: inset 0 1px 1px rgb(170 190 255 / 0.12), inset 0 0 0 1px rgb(170 190 255 / 0.06);
+  --shadow-glow: 0 0 6px rgb(170 190 255 / 0.32), 0 0 12px rgb(255 214 190 / 0.24);
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
+  background: var(--color-canvas);
+}
+
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100vh;
+  /* No background here: it would paint over the z-index:-1 .atmosphere layer. The canvas color lives on <html>. */
+  color: var(--color-pearl-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Ambient layers: grid + sapphire spotlight */
+.atmosphere {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1400px;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.atmosphere::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(170 190 255 / 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(170 190 255 / 0.075) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 30%, transparent 100%);
+}
+.atmosphere::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1600px;
+  height: 900px;
+  transform: translateX(-50%);
+  background:
+    conic-gradient(
+      from 180deg at 50% -5%,
+      transparent 160deg,
+      rgb(45 95 230 / 0.24) 172deg,
+      rgb(45 95 230 / 0.42) 180deg,
+      rgb(45 95 230 / 0.24) 188deg,
+      transparent 200deg
+    ),
+    radial-gradient(ellipse 40% 35% at 50% 0%, rgb(45 95 230 / 0.3), transparent 70%);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgb(255 106 61 / 0.4);
+  color: var(--color-pure-white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sapphire-light);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--page-max-width) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 100;
+  padding: 8px 16px;
+  background: var(--color-steel-plate);
+  color: var(--color-pure-white);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-buttons);
+}
+.skip:focus {
+  top: 12px;
+}
+
+/* Type roles */
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 6.4vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.t-heading-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.t-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.14;
+  color: var(--color-pearl);
+}
+.t-heading-sm {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-pearl);
+}
+.sheen {
+  color: var(--color-pearl);
+  background: var(--gradient-pearl);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.33;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-feature-settings: 'tnum' 1;
+  color: var(--color-pearl-dim);
+}
+
+/* Section eyebrow: tracked caps flanked by fading hairlines */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-feature-settings: 'tnum' 1;
+  color: var(--color-pearl-muted);
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  flex: 0 1 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-glass-edge));
+}
+.eyebrow::after {
+  background: linear-gradient(to left, transparent, var(--color-glass-edge));
+}
+
+.section-head {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.section-head p:not(.eyebrow) {
+  max-width: 640px;
+  color: var(--color-pearl-muted);
+}
+
+/* Glass card */
+.glass {
+  background: var(--surface-frosted-glass);
+  border-radius: var(--radius-cards);
+  box-shadow: var(--shadow-feature-card);
+}
+
+/* Buttons — every button is a pill */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: var(--radius-buttons);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out),
+    color 160ms var(--ease-out);
+}
+.btn-ember {
+  background: var(--color-ember);
+  color: #1a0b05;
+  font-weight: 600;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.24), 0 8px 24px rgb(255 106 61 / 0.28);
+}
+.btn-ember:hover {
+  background: #ff8259;
+}
+.btn-ghost {
+  background: var(--surface-frost-wash);
+  color: var(--color-pure-white);
+  box-shadow: var(--shadow-hairline);
+}
+.btn-ghost:hover {
+  background: rgb(170 190 255 / 0.12);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--color-pearl-body);
+  box-shadow: var(--shadow-hairline);
+}
+.btn-outline:hover {
+  background: var(--surface-frost-wash);
+  box-shadow: var(--shadow-hairline-strong);
+}
+.btn.compact {
+  min-height: 34px;
+  padding: 6px 14px;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-pearl-body);
+  background: var(--color-luminous-fill);
+  border-radius: var(--radius-badges);
+  box-shadow: var(--shadow-badge);
+}
+.badge.accent {
+  color: var(--color-ember);
+  background: var(--color-ember-soft);
+  box-shadow: inset 0 0 0 1px rgb(255 106 61 / 0.18);
+}
+.badge.quiet {
+  color: var(--color-pearl-muted);
+  background: var(--surface-frost-wash);
+}
+
+.arrow {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  transition: transform 160ms var(--ease-out);
+}
+a:hover > .arrow {
+  transform: translateX(2px);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --section-gap: 88px;
+  }
+  .eyebrow::before,
+  .eyebrow::after {
+    flex-basis: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

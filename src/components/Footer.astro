@@ -1,0 +1,163 @@
+---
+import { ui, contact, type Lang } from '../i18n/ui';
+import { projects, projectPath } from '../data/projects';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const year = new Date().getFullYear();
+---
+
+<footer id="contacto" class="footer">
+  <div class="wrap">
+    <div class="cta-card">
+      <p class="eyebrow">{t.footer.eyebrow}</p>
+      <h2 class="t-heading-lg sheen">{t.footer.heading}</h2>
+      <p class="pitch">{t.footer.body}</p>
+      <div class="cta">
+        <span class="mail">{contact.email}</span>
+        <a class="btn btn-ember" href={`mailto:${contact.email}`}>
+          {t.footer.cta}
+          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div>
+        <h3>{t.footer.groups.contact}</h3>
+        <ul>
+          <li><a href={`mailto:${contact.email}`}>Email</a></li>
+          <li><a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href={contact.github} target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>{t.footer.groups.projects}</h3>
+        <ul>
+          {projects.slice(0, 4).map((pr) => (
+            <li><a href={projectPath(lang, pr.slug)}>{pr.title}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3>{t.footer.groups.site}</h3>
+        <ul>
+          <li><a href="/" hreflang="es" lang="es" aria-current={lang === 'es' ? 'page' : undefined}>Español</a></li>
+          <li><a href="/en/" hreflang="en" lang="en" aria-current={lang === 'en' ? 'page' : undefined}>English</a></li>
+        </ul>
+      </div>
+      <p class="legal t-mono">© {year} Matias Navio · {t.footer.rights}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    margin-top: var(--section-gap);
+    padding-bottom: 40px;
+  }
+  .cta-card {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    padding: 64px 32px;
+    text-align: center;
+    background: var(--surface-deep-glass);
+    border-radius: var(--radius-cards);
+    box-shadow: var(--shadow-modal-card), var(--shadow-hairline);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(ellipse 60% 70% at 50% 0%, rgb(45 95 230 / 0.22), transparent 70%);
+  }
+  .pitch {
+    max-width: 48ch;
+    color: var(--color-pearl-muted);
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .mail {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-pure-white);
+    background: rgb(170 190 255 / 0.06);
+    border-radius: var(--radius-buttons);
+    box-shadow: var(--shadow-hairline);
+    user-select: all;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 180px)) 1fr;
+    gap: 32px;
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--color-glass-edge);
+  }
+  h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-pearl-body);
+  }
+  .cols ul {
+    display: grid;
+    gap: 4px;
+  }
+  .cols a {
+    display: inline-block;
+    padding-block: 3px;
+    font-size: 14px;
+    color: var(--color-pearl-dim);
+    text-decoration: none;
+    transition: color 160ms var(--ease-out);
+  }
+  .cols a:hover,
+  .cols a[aria-current='page'] {
+    color: var(--color-pure-white);
+  }
+  .legal {
+    align-self: end;
+    justify-self: end;
+  }
+
+  @media (max-width: 720px) {
+    .cta-card {
+      padding: 48px 20px;
+    }
+    .cta,
+    .cta > * {
+      width: 100%;
+    }
+    .mail {
+      justify-content: center;
+    }
+    .cols {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .legal {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+  }
+</style>

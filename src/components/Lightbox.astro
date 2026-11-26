@@ -1,0 +1,217 @@
+---
+/**
+ * Image viewer for project pages. Any `button[data-zoom]` on the page opens it;
+ * the button holds data-src / data-alt / data-w / data-h. Arrow keys and the
+ * side buttons move between images; Esc, the close button or a backdrop click close it.
+ */
+interface Props {
+  labels: { close: string; prev: string; next: string; dialog: string };
+}
+const { labels } = Astro.props;
+---
+
+<dialog class="lightbox" closedby="any" aria-label={labels.dialog}>
+  <figure>
+    <img alt="" decoding="async" />
+    <figcaption></figcaption>
+  </figure>
+  <button class="lb-btn lb-close" type="button" aria-label={labels.close}>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" /></svg>
+  </button>
+  <button class="lb-btn lb-prev" type="button" aria-label={labels.prev}>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
+  </button>
+  <button class="lb-btn lb-next" type="button" aria-label={labels.next}>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+  </button>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.lightbox');
+  const triggers = [...document.querySelectorAll<HTMLButtonElement>('button[data-zoom]')];
+
+  if (dialog && triggers.length) {
+    const img = dialog.querySelector('img')!;
+    const caption = dialog.querySelector('figcaption')!;
+    const prev = dialog.querySelector<HTMLButtonElement>('.lb-prev')!;
+    const next = dialog.querySelector<HTMLButtonElement>('.lb-next')!;
+    let index = 0;
+
+    const show = (i: number) => {
+      index = (i + triggers.length) % triggers.length;
+      const t = triggers[index].dataset;
+      img.src = t.src!;
+      img.alt = t.alt ?? '';
+      img.width = Number(t.w);
+      img.height = Number(t.h);
+      caption.textContent = t.alt ?? '';
+    };
+
+    const single = triggers.length < 2;
+    prev.hidden = single;
+    next.hidden = single;
+
+    triggers.forEach((btn, i) =>
+      btn.addEventListener('click', () => {
+        show(i);
+        dialog.showModal();
+      }),
+    );
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+    dialog.querySelector('.lb-close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('keydown', (e) => {
+      if (single) return;
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+
+    // The dialog fills the viewport, so a click on its empty area (or the figure
+    // around the image) is the "outside" click. This also covers browsers without
+    // `closedby` support (Safari), where backdrop clicks land on the dialog itself.
+    const figure = dialog.querySelector('figure')!;
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog || e.target === figure) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  .lightbox {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 24px 80px;
+    color: var(--color-pearl-body);
+    background: transparent;
+    border: 0;
+    overflow: visible;
+    overscroll-behavior: contain;
+    opacity: 0;
+    transition-property: opacity, transform, display, overlay;
+    transition-duration: 0.25s;
+    transition-timing-function: var(--ease-out);
+    transition-behavior: allow-discrete;
+  }
+  .lightbox[open] {
+    display: grid;
+    place-items: center;
+    opacity: 1;
+  }
+  @starting-style {
+    .lightbox[open] {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox {
+      transform: scale(0.97);
+    }
+    .lightbox[open] {
+      transform: scale(1);
+    }
+    @starting-style {
+      .lightbox[open] {
+        transform: scale(0.97);
+      }
+    }
+  }
+  .lightbox::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background-color: rgb(3 8 22 / 0);
+    backdrop-filter: blur(6px);
+    transition-property: background-color, display, overlay;
+    transition-duration: 0.25s;
+    transition-behavior: allow-discrete;
+  }
+  .lightbox[open]::backdrop {
+    background-color: rgb(3 8 22 / 0.86);
+  }
+  @starting-style {
+    .lightbox[open]::backdrop {
+      background-color: rgb(3 8 22 / 0);
+    }
+  }
+
+  figure {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    margin: 0;
+  }
+  img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 110px);
+    border-radius: 12px;
+    box-shadow: var(--shadow-modal-card), var(--shadow-hairline);
+  }
+  figcaption {
+    font-size: 14px;
+    color: var(--color-pearl-muted);
+    text-align: center;
+  }
+
+  .lb-btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--color-pearl);
+    background: rgb(11 26 66 / 0.85);
+    border: 0;
+    border-radius: var(--radius-icon);
+    box-shadow: var(--shadow-hairline);
+    cursor: pointer;
+    transition: background-color 160ms var(--ease-out);
+  }
+  .lb-btn:hover {
+    background: var(--color-steel-plate);
+  }
+  .lb-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .lb-close {
+    top: 16px;
+    right: 16px;
+  }
+  .lb-prev,
+  .lb-next {
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .lb-prev {
+    left: 16px;
+  }
+  .lb-next {
+    right: 16px;
+  }
+  .lb-btn[hidden] {
+    display: none;
+  }
+  @media (max-width: 720px) {
+    .lightbox {
+      padding: 72px 8px;
+    }
+    .lb-prev,
+    .lb-next {
+      top: auto;
+      bottom: 16px;
+      translate: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox,
+    .lightbox::backdrop {
+      transition-duration: 0.1s;
+    }
+  }
+</style>

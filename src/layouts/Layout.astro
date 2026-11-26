@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  alternates?: { es: string; en: string };
+}
+
+const { lang, alternates = { es: '/', en: '/en/' } } = Astro.props;
+const t = ui[lang];
+const title = Astro.props.title ?? t.meta.title;
+const description = Astro.props.description ?? t.meta.description;
+const site = Astro.site ?? new URL('https://matiasnavio.dev');
+const esUrl = new URL(alternates.es, site).href;
+const enUrl = new URL(alternates.en, site).href;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#061029" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={lang === 'es' ? esUrl : enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={esUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_AR' : 'en_US'} />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <a class="skip" href="#main">{t.nav.skip}</a>
+    <slot />
+  </body>
+</html>

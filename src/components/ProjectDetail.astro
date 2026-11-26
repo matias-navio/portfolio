@@ -1,0 +1,611 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import Lightbox from './Lightbox.astro';
+import { techLogo } from '../data/techLogos';
+import { ui, type Lang } from '../i18n/ui';
+import { projects, projectPath, type Project, type EngineeringIcon } from '../data/projects';
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+const { lang, project } = Astro.props;
+const t = ui[lang];
+const p = t.projects;
+const idx = projects.findIndex((x) => x.slug === project.slug);
+const next = projects[(idx + 1) % projects.length];
+const home = lang === 'es' ? '/' : '/en/';
+const host = project.url ? new URL(project.url).hostname.replace(/^www\./, '') : null;
+const [cover, ...shots] = project.images ?? [];
+
+/** 1.5px line-art glyphs, 24×24. */
+const engIcons: Record<EngineeringIcon, string> = {
+  shield: 'M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3ZM9 12l2 2 4-4',
+  lock: 'M6 11h12v9H6v-9ZM8.5 11V8a3.5 3.5 0 0 1 7 0v3M12 15v2',
+  search: 'M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14ZM20 20l-4-4',
+  sync: 'M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4',
+  check: 'M12 3l2.4 1.8 3-.2.9 2.9 2.5 1.7-1 2.8 1 2.8-2.5 1.7-.9 2.9-3-.2L12 21l-2.4-1.8-3 .2-.9-2.9-2.5-1.7 1-2.8-1-2.8 2.5-1.7.9-2.9 3 .2L12 3ZM8.5 12l2.5 2.5 4.5-5',
+};
+---
+
+<Layout
+  lang={lang}
+  title={`${project.title} — Matias Navio`}
+  description={project.summary[lang]}
+  alternates={{ es: projectPath('es', project.slug), en: projectPath('en', project.slug) }}
+>
+  <Nav lang={lang} otherHref={projectPath(lang === 'es' ? 'en' : 'es', project.slug)} />
+  <main id="main">
+    <header class="wrap head">
+      <a class="btn btn-outline compact back" href={`${home}#proyectos`}>
+        <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4" /></svg>
+        {p.back}
+      </a>
+      <p class="eyebrow">{String(idx + 1).padStart(2, '0')} · {project.kind[lang]}</p>
+      <h1 class="t-display sheen">{project.title}</h1>
+      <p class="lead">{project.summary[lang]}</p>
+
+      <dl class="facts glass">
+        <div>
+          <dt class="t-mono">{p.role}</dt>
+          <dd>{project.role[lang]}</dd>
+        </div>
+        <div>
+          <dt class="t-mono">{p.kind}</dt>
+          <dd>{project.kind[lang]}</dd>
+        </div>
+        <div>
+          <dt class="t-mono">{p.site}</dt>
+          <dd>
+            {
+              project.url ? (
+                <a href={project.url} target="_blank" rel="noopener">
+                  {host}
+                  <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M5 11 11 5M6 5h5v5" />
+                  </svg>
+                </a>
+              ) : (
+                <span class="muted">{p.private}</span>
+              )
+            }
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    {
+      cover && (
+        <figure class="wrap cover">
+          <button
+            class="frame zoom"
+            type="button"
+            data-zoom
+            data-src={cover.src}
+            data-alt={cover.alt[lang]}
+            data-w={cover.width}
+            data-h={cover.height}
+            aria-label={`${p.zoom}: ${cover.alt[lang]}`}
+          >
+            <img src={cover.src} width={cover.width} height={cover.height} alt={cover.alt[lang]} fetchpriority="high" decoding="async" />
+            <span class="zoom-hint" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM13 13l-3-3M7 5.5v3M5.5 7h3" /></svg>
+            </span>
+          </button>
+        </figure>
+      )
+    }
+
+    <section class="wrap block" aria-labelledby="ctx-h">
+      <header class="section-head">
+        <h2 class="eyebrow" id="ctx-h">{p.context}</h2>
+        <p class="body">{project.context[lang]}</p>
+      </header>
+    </section>
+
+    <section class="wrap block" aria-labelledby="built-h">
+      <header class="section-head">
+        <p class="eyebrow">{project.title}</p>
+        <h2 id="built-h" class="t-heading-lg sheen">{p.built}</h2>
+      </header>
+      <ol class="features">
+        {
+          project.features.map((f, i) => (
+            <li class="glass">
+              <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="t-heading-sm">{f.title[lang]}</h3>
+              <p>{f.body[lang]}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    {
+      project.engineering && (
+        <section class="wrap block" aria-labelledby="eng-h">
+          <header class="section-head">
+            <p class="eyebrow">{p.engineeringEyebrow}</p>
+            <h2 id="eng-h" class="t-heading-lg sheen">{p.engineering}</h2>
+          </header>
+          <ul class="eng">
+            {project.engineering.map((e) => (
+              <li class="eng-card glass">
+                <div class="eng-head">
+                  <span class="eng-tile" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d={engIcons[e.icon]} />
+                    </svg>
+                  </span>
+                  <h3 class="t-heading-sm">{e.title[lang]}</h3>
+                </div>
+                <ul class="eng-points">
+                  {e.points.map((pt) => (
+                    <li>{pt[lang]}</li>
+                  ))}
+                </ul>
+                <ul class="eng-tags">
+                  {e.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      shots.length > 0 && (
+        <section class="wrap block" aria-labelledby="gal-h">
+          <header class="section-head">
+            <h2 class="eyebrow" id="gal-h">{p.gallery}</h2>
+          </header>
+          <div class="gallery">
+            {shots.map((img) => (
+              <figure class="frame">
+                <button
+                  class="zoom"
+                  type="button"
+                  data-zoom
+                  data-src={img.src}
+                  data-alt={img.alt[lang]}
+                  data-w={img.width}
+                  data-h={img.height}
+                  aria-label={`${p.zoom}: ${img.alt[lang]}`}
+                >
+                  <img src={img.src} width={img.width} height={img.height} alt={img.alt[lang]} loading="lazy" decoding="async" />
+                  <span class="zoom-hint" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM13 13l-3-3M7 5.5v3M5.5 7h3" /></svg>
+                  </span>
+                </button>
+                <figcaption>{img.alt[lang]}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="wrap block" aria-labelledby="stack-h">
+      <div class="ledger glass">
+        <div class="ledger-row">
+          <h2 id="stack-h" class="t-mono">{p.stack}</h2>
+          <ul class="techs">
+            {
+              project.stack.map((s) => {
+                const d = techLogo(s);
+                return (
+                  <li class="tech">
+                    {d && (
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d={d} />
+                      </svg>
+                    )}
+                    {s}
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </div>
+        {
+          project.modules && (
+            <div class="ledger-row">
+              <h2 class="t-mono">{p.modules}</h2>
+              <ul class="badges">{project.modules.map((m) => <li class="badge quiet">{m[lang]}</li>)}</ul>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    <nav class="wrap block" aria-label={p.next}>
+      <a class="next glass" href={projectPath(lang, next.slug)}>
+        <span class="t-mono">{p.next}</span>
+        <span class="next-title">
+          <span class="t-heading-lg sheen">{next.title}</span>
+          <span class="next-arrow" aria-hidden="true">
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+          </span>
+        </span>
+      </a>
+    </nav>
+  </main>
+  <Footer lang={lang} />
+  {(cover || shots.length > 0) && <Lightbox labels={p.viewer} />}
+</Layout>
+
+<style>
+  .head {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding-top: 56px;
+    text-align: center;
+  }
+  .back {
+    justify-self: start;
+    margin-bottom: 32px;
+  }
+  .back:hover .arrow {
+    transform: translateX(-2px);
+  }
+  .head .t-display {
+    padding-bottom: 0.06em;
+  }
+  .lead {
+    max-width: 620px;
+    font-size: 18px;
+    color: var(--color-pearl-muted);
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin: 32px 0 0;
+    text-align: left;
+  }
+  .facts div {
+    display: grid;
+    gap: 6px;
+    padding: 20px var(--card-padding);
+  }
+  .facts div + div {
+    box-shadow: inset 1px 0 0 var(--color-glass-edge);
+  }
+  .facts dd {
+    margin: 0;
+    font-weight: 500;
+    color: var(--color-pearl);
+  }
+  .facts a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration-color: var(--color-glass-edge-strong);
+    text-underline-offset: 4px;
+  }
+  .facts a:hover {
+    text-decoration-color: currentColor;
+  }
+  .muted {
+    font-weight: 400;
+    color: var(--color-pearl-dim);
+  }
+
+  .cover {
+    margin-top: 48px;
+  }
+  .frame {
+    margin: 0;
+    padding: 8px;
+    background: var(--surface-deep-glass);
+    border-radius: var(--radius-cards);
+    box-shadow: var(--shadow-modal-card), var(--shadow-hairline);
+  }
+  .frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  .zoom {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    border-radius: 10px;
+    cursor: zoom-in;
+  }
+  button.frame.zoom {
+    padding: 8px;
+    background: var(--surface-deep-glass);
+    border-radius: var(--radius-cards);
+  }
+  .zoom-hint {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-pearl);
+    background: rgb(11 26 66 / 0.85);
+    border-radius: var(--radius-icon);
+    box-shadow: var(--shadow-hairline);
+    opacity: 0;
+    translate: 0 4px;
+    transition:
+      opacity 200ms var(--ease-out),
+      translate 200ms var(--ease-out);
+  }
+  .zoom-hint svg {
+    width: 16px;
+    height: 16px;
+  }
+  .zoom:hover .zoom-hint,
+  .zoom:focus-visible .zoom-hint {
+    opacity: 1;
+    translate: 0 0;
+  }
+  @media (hover: none) {
+    .zoom-hint {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  .techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tech {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-pearl-body);
+    background: var(--surface-frost-wash);
+    border-radius: var(--radius-badges);
+    box-shadow: var(--shadow-badge);
+  }
+  .tech svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--color-pearl);
+  }
+  .frame figcaption {
+    padding: 12px 8px 4px;
+    font-size: 13px;
+    color: var(--color-pearl-dim);
+  }
+
+  .block {
+    display: grid;
+    gap: 40px;
+    padding-top: var(--section-gap);
+  }
+  .body {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  h2.eyebrow {
+    margin: 0;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .features li {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: var(--card-padding);
+  }
+  .num {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-ember);
+    background: var(--color-ember-soft);
+    border-radius: var(--radius-icon);
+    box-shadow: inset 0 0 0 1px var(--color-ember-edge);
+  }
+  .features p {
+    max-width: 48ch;
+    font-size: 15px;
+    color: var(--color-pearl-dim);
+  }
+
+  .eng {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .eng-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: var(--card-padding);
+  }
+  .eng-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eng-head .t-heading-sm {
+    font-size: 17px;
+  }
+  .eng-tile {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    color: var(--color-pearl-body);
+    background: var(--surface-frost-wash);
+    border-radius: var(--radius-icon);
+    box-shadow: var(--shadow-hairline), inset 0 1px 1px rgb(247 243 236 / 0.16);
+  }
+  .eng-tile svg {
+    width: 20px;
+    height: 20px;
+  }
+  .eng-points {
+    display: grid;
+    gap: 10px;
+  }
+  .eng-points li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--color-pearl-dim);
+  }
+  .eng-points li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-icon);
+    background: var(--color-ember);
+    box-shadow: 0 0 8px rgb(255 106 61 / 0.6);
+  }
+  .eng-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-glass-edge);
+  }
+  .eng-tags li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-pearl-muted);
+  }
+  .eng-tags li + li::before {
+    content: '·';
+    margin-right: 6px;
+    color: var(--color-pearl-dim);
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .ledger {
+    padding: 4px var(--card-padding);
+  }
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding-block: 20px;
+  }
+  .ledger-row + .ledger-row {
+    border-top: 1px solid var(--color-glass-edge);
+  }
+  .ledger-row .t-mono {
+    margin: 0;
+    padding-top: 6px;
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .next {
+    display: grid;
+    gap: 12px;
+    padding: 32px var(--card-padding);
+    text-decoration: none;
+    transition:
+      background-color 200ms var(--ease-out),
+      box-shadow 200ms var(--ease-out);
+  }
+  .next:hover {
+    background: rgb(170 190 255 / 0.05);
+    box-shadow: var(--shadow-feature-card), inset 0 0 0 1px var(--color-ember-edge);
+  }
+  .next:hover .next-arrow {
+    color: var(--color-canvas);
+    background: var(--color-ember);
+  }
+  .next-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .next-arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 48px;
+    height: 48px;
+    color: var(--color-ember);
+    border-radius: var(--radius-icon);
+    box-shadow: inset 0 0 0 1px var(--color-ember-edge);
+    transition:
+      background-color 200ms var(--ease-out),
+      color 200ms var(--ease-out);
+  }
+  .next-arrow .arrow {
+    width: 18px;
+    height: 18px;
+  }
+  .next:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 880px) {
+    .features,
+    .gallery,
+    .eng {
+      grid-template-columns: 1fr;
+    }
+    .facts {
+      grid-template-columns: 1fr;
+    }
+    .facts div + div {
+      box-shadow: inset 0 1px 0 var(--color-glass-edge);
+    }
+    .ledger-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .ledger-row .t-mono {
+      padding-top: 0;
+    }
+    .frame {
+      padding: 6px;
+    }
+  }
+</style>

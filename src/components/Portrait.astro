@@ -1,0 +1,64 @@
+---
+/** Center node of the rail diagram: glass frame + photo + glowing status dot. */
+interface Props {
+  cx: number;
+  cy: number;
+  size: number;
+  id: string;
+}
+const { cx, cy, size, id } = Astro.props;
+const x = cx - size / 2;
+const y = cy - size / 2;
+const pad = 6;
+const inner = size - pad * 2;
+const clip = `portrait-clip-${id}`;
+const glow = `portrait-glow-${id}`;
+const r = 20;
+---
+
+<g class="portrait">
+  <defs>
+    <clipPath id={clip}>
+      <rect x={x + pad} y={y + pad} width={inner} height={inner} rx={r - pad} />
+    </clipPath>
+    <radialGradient id={glow}>
+      <stop offset="0" stop-color="#2d5fe6" stop-opacity="0.45" />
+      <stop offset="1" stop-color="#2d5fe6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <circle cx={cx} cy={cy} r={size * 0.95} fill={`url(#${glow})`} />
+  <rect class="frame" x={x} y={y} width={size} height={size} rx={r} />
+  <image
+    href="/img/matias-480.webp"
+    x={x + pad}
+    y={y + pad}
+    width={inner}
+    height={inner}
+    preserveAspectRatio="xMidYMid slice"
+    clip-path={`url(#${clip})`}
+  />
+  <rect class="edge" x={x + pad} y={y + pad} width={inner} height={inner} rx={r - pad} />
+  <circle class="dot-ring" cx={x + size - 6} cy={y + size - 6} r="9" />
+  <circle class="dot" cx={x + size - 6} cy={y + size - 6} r="4.5" />
+</g>
+
+<style>
+  .frame {
+    fill: rgb(6 16 41 / 0.97);
+    stroke: rgb(247 243 236 / 0.22);
+    stroke-width: 1;
+  }
+  .edge {
+    fill: none;
+    stroke: rgb(170 190 255 / 0.12);
+    stroke-width: 1;
+  }
+  .dot-ring {
+    fill: var(--color-canvas);
+    stroke: rgb(170 190 255 / 0.24);
+  }
+  .dot {
+    fill: var(--color-ember);
+    filter: drop-shadow(0 0 4px rgb(255 106 61 / 0.9));
+  }
+</style>
