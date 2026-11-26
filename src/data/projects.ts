@@ -579,28 +579,111 @@ export const projects: Project[] = [
     kind: { es: 'Producto personal', en: 'Personal product' },
     role: { es: 'Desarrollo completo', en: 'Full build' },
     summary: {
-      es: 'Plataforma de finanzas personales con API propia, gráficos y autenticación.',
-      en: 'Personal finance platform with its own API, charts and authentication.',
+      es: 'Plataforma de finanzas personales: movimientos, gastos fijos y futuros, inversiones y un dashboard con alertas.',
+      en: 'Personal finance platform: transactions, recurring and planned expenses, investments and a dashboard with alerts.',
     },
     context: {
-      es: 'Proyecto propio para ordenar mis finanzas. API en NestJS con Prisma y una web en Next.js con gráficos.',
-      en: 'Personal project to organize my finances. NestJS API with Prisma and a Next.js web app with charts.',
+      es: 'Proyecto propio para ordenar mis finanzas: una API en NestJS con Prisma sobre Supabase y una web en Next.js.',
+      en: 'Personal project to organize my finances: a NestJS API with Prisma on Supabase and a Next.js web app.',
     },
-    stack: ['NestJS', 'Prisma', 'PostgreSQL', 'Next.js', 'Supabase Auth', 'Recharts'],
+    stack: ['NestJS', 'TypeScript', 'Prisma', 'PostgreSQL', 'Next.js', 'Supabase Auth', 'Recharts'],
     features: [
       {
-        title: { es: 'API propia', en: 'Own API' },
+        title: { es: 'Movimientos', en: 'Transactions' },
         body: {
-          es: 'NestJS con Prisma, validación de JWT y tareas programadas.',
-          en: 'NestJS with Prisma, JWT validation and scheduled jobs.',
+          es: 'Ingresos y gastos con categorías, filtros por mes, monto y notas.',
+          en: 'Income and expenses with categories, filters by month, amount and notes.',
         },
       },
       {
-        title: { es: 'Web con gráficos', en: 'Web with charts' },
+        title: { es: 'Gastos fijos', en: 'Recurring expenses' },
         body: {
-          es: 'Next.js con formularios validados y gráficos de ingresos y gastos.',
-          en: 'Next.js with validated forms and income/expense charts.',
+          es: 'Se generan solos cada mes y se puede saltear un mes puntual.',
+          en: 'Generated automatically every month, with the option to skip one.',
         },
+      },
+      {
+        title: { es: 'Gastos futuros', en: 'Planned expenses' },
+        body: {
+          es: 'Compras planificadas con rango de precio, prioridad y estado.',
+          en: 'Planned purchases with price range, priority and status.',
+        },
+      },
+      {
+        title: { es: 'Inversiones', en: 'Investments' },
+        body: {
+          es: 'Depósitos, retiros, ajustes y rendimiento por semana, mes o trimestre.',
+          en: 'Deposits, withdrawals, adjustments and returns by week, month or quarter.',
+        },
+      },
+      {
+        title: { es: 'Dashboard', en: 'Dashboard' },
+        body: {
+          es: 'Disponible, invertido, patrimonio, ingresos vs gastos y comparación mensual.',
+          en: 'Available, invested, net worth, income vs expenses and monthly comparison.',
+        },
+      },
+      {
+        title: { es: 'Alertas', en: 'Alerts' },
+        body: {
+          es: 'Avisa de gastos fijos próximos y de días sin registrar movimientos.',
+          en: 'Flags upcoming recurring expenses and days without new entries.',
+        },
+      },
+    ],
+    engineering: [
+      {
+        icon: 'shield',
+        title: { es: 'Dinero en centavos', en: 'Money in cents' },
+        points: [
+          { es: 'Los montos se guardan como enteros en centavos: sin errores de redondeo.', en: 'Amounts are stored as integer cents: no rounding errors.' },
+          { es: 'Los totales se suman en la base y el saldo se calcula en la API, nunca en el navegador.', en: 'Totals are summed in the database and the balance is computed in the API, never in the browser.' },
+        ],
+        tags: ['Prisma', 'PostgreSQL'],
+      },
+      {
+        icon: 'bolt',
+        title: { es: 'Dashboard rápido', en: 'Fast dashboard' },
+        points: [
+          { es: 'El resumen principal sale de una sola consulta SQL.', en: 'The main summary comes from a single SQL query.' },
+          { es: 'Gráficos en endpoints separados y paginación real en movimientos.', en: 'Charts on separate endpoints and real pagination for transactions.' },
+        ],
+        tags: ['SQL', 'Performance'],
+      },
+      {
+        icon: 'sync',
+        title: { es: 'Gastos fijos automáticos', en: 'Automatic recurring expenses' },
+        points: [
+          { es: 'Una tarea diaria genera los gastos fijos de cada usuario.', en: 'A daily job generates each user’s recurring expenses.' },
+          { es: 'Es idempotente: si corre dos veces, no duplica nada.', en: 'It is idempotent: running twice never duplicates.' },
+        ],
+        tags: ['Cron', 'NestJS'],
+      },
+    ],
+    images: [
+      {
+        src: '/img/projects/mis-finanzas/dashboard.webp',
+        width: 1600,
+        height: 794,
+        alt: { es: 'Dashboard con disponible, inversiones, patrimonio y gráfico de ingresos vs gastos (montos difuminados)', en: 'Dashboard with available, invested, net worth and income vs expenses (amounts blurred)' },
+      },
+      {
+        src: '/img/projects/mis-finanzas/movimientos.webp',
+        width: 1600,
+        height: 798,
+        alt: { es: 'Movimientos con filtros por mes, categoría, monto y notas (montos difuminados)', en: 'Transactions with filters by month, category, amount and notes (amounts blurred)' },
+      },
+      {
+        src: '/img/projects/mis-finanzas/inversiones.webp',
+        width: 1600,
+        height: 787,
+        alt: { es: 'Inversiones con rendimiento del período (montos difuminados)', en: 'Investments with period returns (amounts blurred)' },
+      },
+      {
+        src: '/img/projects/mis-finanzas/gastos-futuros.webp',
+        width: 1600,
+        height: 786,
+        alt: { es: 'Gastos futuros con prioridad y rango de precio (montos difuminados)', en: 'Planned expenses with priority and price range (amounts blurred)' },
       },
     ],
   },
