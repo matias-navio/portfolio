@@ -9,7 +9,7 @@ export interface ProjectImage {
   alt: L;
 }
 
-export type EngineeringIcon = 'shield' | 'lock' | 'search' | 'sync' | 'check' | 'server' | 'bolt';
+export type EngineeringIcon = 'shield' | 'lock' | 'search' | 'sync' | 'check' | 'server' | 'bolt' | 'chart';
 
 /** "Under the hood" backend details shown on the project page. */
 export interface EngineeringNote {
@@ -387,6 +387,15 @@ export const projects: Project[] = [
           { es: 'HTML y sitemap sin caché, para que cada cambio se vea al instante.', en: 'HTML and sitemap uncached, so every change shows up instantly.' },
         ],
         tags: ['Cache-Control', 'gzip'],
+      },
+      {
+        icon: 'chart',
+        title: { es: 'Métricas y SEO medibles', en: 'Measurable metrics & SEO' },
+        points: [
+          { es: 'Google Analytics 4 instalado en todo el sitio.', en: 'Google Analytics 4 across the whole site.' },
+          { es: 'Conexión directa con Looker Studio (ex Data Studio) para analizar tráfico y SEO.', en: 'Direct connection to Looker Studio (formerly Data Studio) to analyze traffic and SEO.' },
+        ],
+        tags: ['GA4', 'Looker Studio'],
       },
     ],
     images: [
