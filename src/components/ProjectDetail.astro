@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from './Nav.astro';
 import Footer from './Footer.astro';
 import Lightbox from './Lightbox.astro';
-import { techLogo } from '../data/techLogos';
+import TechChip from './TechChip.astro';
 import { ui, type Lang } from '../i18n/ui';
 import { projects, projectPath, type Project, type EngineeringIcon } from '../data/projects';
 
@@ -195,21 +195,9 @@ const engIcons: Record<EngineeringIcon, string> = {
         <div class="ledger-row">
           <h2 id="stack-h" class="t-mono">{p.stack}</h2>
           <ul class="techs">
-            {
-              project.stack.map((s) => {
-                const d = techLogo(s);
-                return (
-                  <li class="tech">
-                    {d && (
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d={d} />
-                      </svg>
-                    )}
-                    {s}
-                  </li>
-                );
-              })
-            }
+            {project.stack.map((s) => (
+              <TechChip label={s} />
+            ))}
           </ul>
         </div>
         {
@@ -369,23 +357,7 @@ const engIcons: Record<EngineeringIcon, string> = {
     flex-wrap: wrap;
     gap: 8px;
   }
-  .tech {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-pearl-body);
-    background: var(--surface-frost-wash);
-    border-radius: var(--radius-badges);
-    box-shadow: var(--shadow-badge);
-  }
-  .tech svg {
-    width: 16px;
-    height: 16px;
-    fill: var(--color-pearl);
-  }
+
   .frame figcaption {
     padding: 12px 8px 4px;
     font-size: 13px;

@@ -1,5 +1,6 @@
 ---
 import { ui, stack, type Lang, type StackGroup } from '../i18n/ui';
+import TechChip from './TechChip.astro';
 
 interface Props {
   lang: Lang;
@@ -58,7 +59,7 @@ const icons: Record<StackGroup, string> = {
           </div>
           <ul class="badges">
             {g.items.map((s) => (
-              <li class:list={['badge', { quiet: !g.strong }]}>{s}</li>
+              <TechChip label={s} />
             ))}
           </ul>
         </li>

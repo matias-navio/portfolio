@@ -8,9 +8,9 @@ export const contact = {
 
 export type StackGroup = 'java' | 'node' | 'front' | 'data' | 'infra' | 'integrations';
 
-export const stack: { id: StackGroup; items: string[]; strong?: boolean }[] = [
-  { id: 'java', strong: true, items: ['Java 17', 'Spring Boot 3', 'Spring Cloud · Eureka', 'Microservices'] },
-  { id: 'node', strong: true, items: ['Node.js', 'NestJS', 'TypeScript', 'Express'] },
+export const stack: { id: StackGroup; items: string[] }[] = [
+  { id: 'java', items: ['Java 17', 'Spring Boot 3', 'Spring Cloud · Eureka', 'Microservices'] },
+  { id: 'node', items: ['Node.js', 'NestJS', 'TypeScript', 'Express'] },
   { id: 'front', items: ['React', 'Next.js', 'Astro', 'Tailwind CSS', 'Claude Code'] },
   { id: 'data', items: ['PostgreSQL', 'MySQL', 'Supabase · RLS'] },
   { id: 'infra', items: ['Docker', 'Dokploy', 'Vercel', 'Git · GitHub · GitLab', 'Scrum'] },
