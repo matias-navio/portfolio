@@ -273,55 +273,134 @@ export const projects: Project[] = [
     kind: { es: 'Sistema de gestión', en: 'Management system' },
     role: { es: 'Backend completo', en: 'Full backend' },
     summary: {
-      es: 'Sistema de control para una barbería: visitas, barberos, caja, clientes y sucursales.',
-      en: 'Management system for a barbershop: visits, barbers, cash register, customers and branches.',
+      es: 'Sistema de gestión para una barbería con dos sucursales: operaciones, caja, clientes, sueldos y stock.',
+      en: 'Management system for a two-branch barbershop: operations, cash register, customers, payroll and stock.',
     },
     context: {
-      es: 'Una barbería necesitaba controlar el trabajo diario de cada barbero, la caja y los clientes en más de una sucursal. Desarrollé el backend completo y su despliegue.',
-      en: 'A barbershop needed to track each barber’s daily work, the cash register and customers across more than one branch. I built the full backend and its deployment.',
+      es: 'La barbería llevaba los cortes, la caja y los fiados en papel. Desarrollé el backend completo del sistema en la nube que hoy usan sus dos sucursales.',
+      en: 'The barbershop tracked haircuts, cash and tabs on paper. I built the full backend of the cloud system both branches use today.',
     },
     stack: ['NestJS', 'TypeScript', 'Supabase', 'PostgreSQL', 'Docker', 'Nginx'],
     features: [
       {
-        title: { es: 'Visitas y servicios', en: 'Visits & services' },
+        title: { es: 'Operaciones y cobros', en: 'Operations & payments' },
         body: {
-          es: 'Registro de cada visita con el barbero y los servicios realizados.',
-          en: 'Each visit is recorded with the barber and the services performed.',
+          es: 'Cortes y ventas en efectivo, Mercado Pago, pago combinado o fiado.',
+          en: 'Haircuts and sales paid in cash, Mercado Pago, split or on credit.',
         },
       },
       {
-        title: { es: 'Caja', en: 'Cash register' },
+        title: { es: 'Caja y cuentas', en: 'Cash register & accounts' },
         body: {
-          es: 'Apertura y cierre de caja con movimientos de ingreso y egreso.',
-          en: 'Opening and closing the register, with income and expense movements.',
+          es: 'Apertura y cierre de caja, movimientos, depósitos y transferencias.',
+          en: 'Opening and closing the register, movements, deposits and transfers.',
         },
       },
       {
-        title: { es: 'Equipo y sucursales', en: 'Staff & branches' },
+        title: { es: 'Clientes y deudas', en: 'Customers & debts' },
         body: {
-          es: 'Gestión de barberos, cuentas y sucursales, con autenticación por roles.',
-          en: 'Barbers, accounts and branches, with role-based authentication.',
+          es: 'Historial por cliente y sucursal, con cobro de deudas pendientes.',
+          en: 'History per customer and branch, with collection of pending debts.',
         },
       },
       {
-        title: { es: 'Dashboard', en: 'Dashboard' },
+        title: { es: 'Productos y stock', en: 'Products & stock' },
         body: {
-          es: 'Resumen del negocio para el dueño: operaciones, caja y compras.',
-          en: 'Business overview for the owner: operations, cash and purchases.',
+          es: 'Compras, ingreso de stock y venta de productos en el local.',
+          en: 'Purchases, stock intake and in-store product sales.',
+        },
+      },
+      {
+        title: { es: 'Sueldos de barberos', en: 'Barber payroll' },
+        body: {
+          es: 'Sueldo calculado según los cortes de cada barbero en el período.',
+          en: 'Pay calculated from each barber’s haircuts in the period.',
+        },
+      },
+      {
+        title: { es: 'Estadísticas', en: 'Statistics' },
+        body: {
+          es: 'Ingresos, servicios, productos vendidos y clientes por mes y sucursal.',
+          en: 'Income, services, products sold and customers by month and branch.',
         },
       },
     ],
+    engineering: [
+      {
+        icon: 'shield',
+        title: { es: 'La plata, en la base', en: 'Money logic in the database' },
+        points: [
+          { es: 'Cierre de caja, cobro de deudas, sueldos y transferencias corren como funciones en Postgres.', en: 'Cash closing, debt collection, payroll and transfers run as Postgres functions.' },
+          { es: 'El dashboard del dueño se arma en una sola consulta.', en: 'The owner dashboard is built in a single query.' },
+        ],
+        tags: ['Postgres RPC', 'Supabase'],
+      },
+      {
+        icon: 'sync',
+        title: { es: 'Tipos compartidos front y back', en: 'Shared types, front & back' },
+        points: [
+          { es: 'Un paquete común de DTOs, entidades y enums que usan la API y el frontend.', en: 'A common package of DTOs, entities and enums used by the API and the frontend.' },
+          { es: 'Si cambia un contrato, el error aparece al compilar y no en producción.', en: 'If a contract changes, it fails at build time, not in production.' },
+        ],
+        tags: ['TypeScript', 'Monorepo'],
+      },
+      {
+        icon: 'lock',
+        title: { es: 'API con roles', en: 'Role-based API' },
+        points: [
+          { es: 'Autenticación con JWT y guards por rol en NestJS.', en: 'JWT authentication and role guards in NestJS.' },
+          { es: 'Respuestas con formato uniforme mediante un interceptor.', en: 'Uniform responses through an interceptor.' },
+        ],
+        tags: ['JWT', 'Guards'],
+      },
+    ],
     modules: [
-      { es: 'Visitas', en: 'Visits' },
       { es: 'Operaciones', en: 'Operations' },
+      { es: 'Visitas', en: 'Visits' },
       { es: 'Caja', en: 'Cash register' },
-      { es: 'Movimientos', en: 'Cash movements' },
+      { es: 'Cuentas', en: 'Accounts' },
       { es: 'Clientes', en: 'Customers' },
       { es: 'Productos', en: 'Products' },
       { es: 'Compras', en: 'Purchases' },
-      { es: 'Personal', en: 'Staff' },
+      { es: 'Empleados', en: 'Staff' },
+      { es: 'Sueldos', en: 'Payroll' },
       { es: 'Sucursales', en: 'Branches' },
-      { es: 'Dashboard', en: 'Dashboard' },
+      { es: 'Estadísticas', en: 'Statistics' },
+    ],
+    images: [
+      {
+        src: '/img/projects/nicolino/cover.svg',
+        width: 1600,
+        height: 800,
+        alt: {
+          es: 'Ilustración: de una libreta de caja en papel a un panel en la nube con dos sucursales',
+          en: 'Illustration: from a paper cash notebook to a cloud dashboard with two branches',
+        },
+      },
+      {
+        src: '/img/projects/nicolino/estadisticas.webp',
+        width: 1600,
+        height: 796,
+        alt: { es: 'Estadísticas con ingresos mensuales y servicios realizados', en: 'Statistics with monthly income and services performed' },
+      },
+      {
+        src: '/img/projects/nicolino/operaciones.webp',
+        width: 1600,
+        height: 795,
+        alt: { es: 'Operaciones con barbero, método de pago y total', en: 'Operations with barber, payment method and total' },
+      },
+      {
+        src: '/img/projects/nicolino/caja.webp',
+        width: 1600,
+        height: 786,
+        alt: { es: 'Caja abierta con efectivo, Mercado Pago y movimientos de la sesión', en: 'Open register with cash, Mercado Pago and session movements' },
+      },
+      {
+        src: '/img/projects/nicolino/clientes.webp',
+        width: 1600,
+        height: 794,
+        alt: { es: 'Listado de clientes con sucursal y deuda (datos personales difuminados)', en: 'Customer list with branch and debt (personal data blurred)' },
+      },
     ],
   },
   {
