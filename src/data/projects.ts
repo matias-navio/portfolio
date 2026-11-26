@@ -9,7 +9,7 @@ export interface ProjectImage {
   alt: L;
 }
 
-export type EngineeringIcon = 'shield' | 'lock' | 'search' | 'sync' | 'check';
+export type EngineeringIcon = 'shield' | 'lock' | 'search' | 'sync' | 'check' | 'server' | 'bolt';
 
 /** "Under the hood" backend details shown on the project page. */
 export interface EngineeringNote {
@@ -331,28 +331,88 @@ export const projects: Project[] = [
     kind: { es: 'Landing', en: 'Landing page' },
     role: { es: 'Desarrollo completo', en: 'Full build' },
     summary: {
-      es: 'Landing para un instituto de inglés online.',
-      en: 'Landing page for an online English institute.',
+      es: 'Landing para un instituto de inglés online: método, planes, equipo y testimonios.',
+      en: 'Landing page for an online English institute: method, plans, team and testimonials.',
     },
     context: {
-      es: 'Un instituto de inglés remoto necesitaba una página rápida y clara para captar alumnos. La construí con Astro y la desplegué en contenedor.',
-      en: 'A remote English institute needed a fast, clear page to bring in students. I built it with Astro and deployed it in a container.',
+      es: 'Un instituto de inglés remoto necesitaba una página rápida y clara para captar alumnos por WhatsApp. La construí con Astro y la desplegué en contenedor.',
+      en: 'A remote English institute needed a fast, clear page to bring in students through WhatsApp. I built it with Astro and deployed it in a container.',
     },
-    stack: ['Astro', 'Tailwind CSS', 'Docker', 'Nginx'],
+    stack: ['Astro', 'TypeScript', 'Tailwind CSS', 'Docker', 'Nginx'],
     features: [
       {
-        title: { es: 'Sitio estático', en: 'Static site' },
+        title: { es: 'Planes que llevan a WhatsApp', en: 'Plans that lead to WhatsApp' },
         body: {
-          es: 'HTML generado en build, sin JavaScript innecesario y con sitemap para buscadores.',
-          en: 'HTML generated at build time, no unnecessary JavaScript, with a sitemap for search engines.',
+          es: 'Elegís un plan y el botón arma el mensaje con las clases y el precio.',
+          en: 'Pick a plan and the button builds the message with classes and price.',
         },
       },
       {
-        title: { es: 'Despliegue propio', en: 'Self-hosted deploy' },
+        title: { es: 'Rápida por diseño', en: 'Fast by design' },
         body: {
-          es: 'Imagen Docker servida con Nginx.',
-          en: 'Docker image served with Nginx.',
+          es: 'HTML estático, imágenes en WebP y casi sin JavaScript.',
+          en: 'Static HTML, WebP images and almost no JavaScript.',
         },
+      },
+      {
+        title: { es: 'SEO técnico', en: 'Technical SEO' },
+        body: {
+          es: 'Sitemap, robots.txt y datos estructurados de la organización.',
+          en: 'Sitemap, robots.txt and structured organization data.',
+        },
+      },
+      {
+        title: { es: 'Accesible en mobile', en: 'Accessible on mobile' },
+        body: {
+          es: 'Menú móvil con etiquetas accesibles y áreas táctiles amplias.',
+          en: 'Mobile menu with accessible labels and large touch targets.',
+        },
+      },
+    ],
+    engineering: [
+      {
+        icon: 'server',
+        title: { es: 'Despliegue con Docker y Nginx', en: 'Docker & Nginx deploy' },
+        points: [
+          { es: 'Build multi-stage: Node compila el sitio y Nginx lo sirve.', en: 'Multi-stage build: Node builds the site, Nginx serves it.' },
+          { es: 'Redirección permanente de www al dominio canónico.', en: 'Permanent redirect from www to the canonical domain.' },
+        ],
+        tags: ['Docker', 'Nginx'],
+      },
+      {
+        icon: 'bolt',
+        title: { es: 'Caché y compresión', en: 'Caching & compression' },
+        points: [
+          { es: 'gzip y assets con hash cacheados por un año.', en: 'gzip and hashed assets cached for a year.' },
+          { es: 'HTML y sitemap sin caché, para que cada cambio se vea al instante.', en: 'HTML and sitemap uncached, so every change shows up instantly.' },
+        ],
+        tags: ['Cache-Control', 'gzip'],
+      },
+    ],
+    images: [
+      {
+        src: '/img/projects/upfluent/inicio.webp',
+        width: 1600,
+        height: 801,
+        alt: { es: 'Inicio de UpFluent con el titular y una alumna en clase online', en: 'UpFluent homepage with the headline and a student in an online class' },
+      },
+      {
+        src: '/img/projects/upfluent/equipo.webp',
+        width: 1600,
+        height: 796,
+        alt: { es: 'Sección del equipo de profesoras', en: 'Teacher team section' },
+      },
+      {
+        src: '/img/projects/upfluent/testimonios.webp',
+        width: 1600,
+        height: 795,
+        alt: { es: 'Carrusel de testimonios de alumnos', en: 'Student testimonials carousel' },
+      },
+      {
+        src: '/img/projects/upfluent/planes.webp',
+        width: 1600,
+        height: 797,
+        alt: { es: 'Planes mensuales con selector de clases por semana', en: 'Monthly plans with a classes-per-week selector' },
       },
     ],
   },
