@@ -662,6 +662,15 @@ export const projects: Project[] = [
     ],
     images: [
       {
+        src: '/img/projects/mis-finanzas/cover.svg',
+        width: 1600,
+        height: 800,
+        alt: {
+          es: 'Ilustración: de tickets y notas sueltas a un panel de finanzas ordenado',
+          en: 'Illustration: from loose receipts and sticky notes to an organized finance dashboard',
+        },
+      },
+      {
         src: '/img/projects/mis-finanzas/dashboard.webp',
         width: 1600,
         height: 794,
