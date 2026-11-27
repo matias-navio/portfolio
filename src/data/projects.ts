@@ -507,37 +507,98 @@ export const projects: Project[] = [
   {
     slug: 'facturacion-arca',
     title: 'Facturación ARCA',
-    kind: { es: 'Integración fiscal', en: 'Tax integration' },
-    role: { es: 'Desarrollo completo', en: 'Full build' },
+    kind: { es: 'API de integración fiscal', en: 'Tax integration API' },
+    role: { es: 'Desarrollo completo · Malbecode', en: 'Full build · Malbecode' },
     summary: {
-      es: 'Servicio que autentica con WSAA, emite comprobantes por WSFE y genera el PDF con QR.',
-      en: "Service that authenticates with WSAA, issues invoices via WSFE and renders the PDF with QR code (Argentina's tax authority).",
+      es: 'API que emite facturas electrónicas con ARCA (ex AFIP): autenticación con certificado, CAE y PDF con QR fiscal.',
+      en: "API that issues e-invoices through ARCA (Argentina's tax authority, formerly AFIP): certificate auth, CAE and PDF with fiscal QR.",
     },
     context: {
-      es: 'Integración con los web services de ARCA (ex AFIP) para facturación electrónica. Funciona de punta a punta; todavía no se usa para emitir facturas reales.',
-      en: "Integration with ARCA's (formerly AFIP) web services for e-invoicing. It works end to end; it isn’t issuing real invoices yet.",
+      es: 'La desarrollé en Malbecode para que los sistemas de gestión puedan facturar. Habla con los web services SOAP de ARCA y hoy emite comprobantes reales en producción.',
+      en: "I built it at Malbecode so business management systems can issue invoices. It talks to ARCA's SOAP web services and issues real invoices in production today.",
     },
-    stack: ['NestJS', 'TypeScript', 'SOAP', 'node-forge', 'Supabase', 'Docker'],
+    stack: ['NestJS', 'TypeScript', 'SOAP', 'node-forge', 'Supabase', 'jsPDF', 'Docker'],
     features: [
       {
         title: { es: 'Autenticación WSAA', en: 'WSAA authentication' },
         body: {
-          es: 'Firma del ticket de acceso con certificado digital y manejo del token.',
-          en: 'Access ticket signed with a digital certificate, with token handling.',
+          es: 'Firma el ticket de acceso (CMS, SHA-256) con el certificado digital del negocio.',
+          en: "Signs the access ticket (CMS, SHA-256) with the business's digital certificate.",
         },
       },
       {
         title: { es: 'Emisión por WSFE', en: 'WSFE issuing' },
         body: {
-          es: 'Armado y envío de comprobantes al web service de facturación electrónica.',
-          en: 'Builds and sends invoices to the e-invoicing web service.',
+          es: 'Consulta el último número autorizado y pide el CAE para el siguiente.',
+          en: 'Looks up the last authorized number and requests the CAE for the next one.',
         },
       },
       {
-        title: { es: 'PDF con QR', en: 'PDF with QR' },
+        title: { es: 'Facturas A, B, C y E', en: 'A, B, C and E invoices' },
         body: {
-          es: 'Generación del comprobante en PDF con el código QR fiscal.',
-          en: 'Renders the invoice as a PDF with the fiscal QR code.',
+          es: 'IVA por alícuota, bonificaciones, unidades de medida y condición fiscal del cliente.',
+          en: 'VAT per rate, discounts, units of measure and the customer’s tax status.',
+        },
+      },
+      {
+        title: { es: 'PDF con QR fiscal', en: 'PDF with fiscal QR' },
+        body: {
+          es: 'Comprobante en el formato que pide ARCA, con CAE, vencimiento y código QR.',
+          en: 'Invoice in the format ARCA requires, with CAE, expiry and QR code.',
+        },
+      },
+      {
+        title: { es: 'Varios negocios', en: 'Multiple businesses' },
+        body: {
+          es: 'Cada negocio factura con su propio CUIT, punto de venta y certificado.',
+          en: 'Each business invoices with its own tax ID, point of sale and certificate.',
+        },
+      },
+      {
+        title: { es: 'Tickets no fiscales', en: 'Non-fiscal receipts' },
+        body: {
+          es: 'Comprobantes de compra en PDF para las ventas que no se facturan.',
+          en: 'Purchase receipts as PDF for sales that aren’t invoiced.',
+        },
+      },
+    ],
+    engineering: [
+      {
+        icon: 'lock',
+        title: { es: 'Certificados protegidos', en: 'Protected certificates' },
+        points: [
+          { es: 'Certificado y clave privada viven en un bucket privado de Supabase, nunca en el repo ni en disco.', en: 'Certificate and private key live in a private Supabase bucket, never in the repo or on disk.' },
+          { es: 'Se leen con una URL firmada que vence en 60 segundos.', en: 'They are read through a signed URL that expires in 60 seconds.' },
+        ],
+        tags: ['Supabase Storage', 'node-forge'],
+      },
+      {
+        icon: 'bolt',
+        title: { es: 'Token reutilizado', en: 'Reused token' },
+        points: [
+          { es: 'El ticket de acceso de ARCA se guarda por negocio y se reutiliza durante 12 horas.', en: 'The ARCA access ticket is stored per business and reused for 12 hours.' },
+          { es: 'Una factura no paga el costo de autenticarse cada vez.', en: 'An invoice doesn’t pay the cost of authenticating every time.' },
+        ],
+        tags: ['WSAA', 'Cache'],
+      },
+      {
+        icon: 'shield',
+        title: { es: 'Sin facturas duplicadas', en: 'No duplicate invoices' },
+        points: [
+          { es: 'Antes de llamar a ARCA verifica que la venta exista y no tenga factura.', en: 'Before calling ARCA it checks that the sale exists and has no invoice yet.' },
+          { es: 'La factura y sus ítems quedan guardados y vinculados a la venta.', en: 'The invoice and its items are stored and linked to the sale.' },
+        ],
+        tags: ['WSFE', 'Supabase'],
+      },
+    ],
+    images: [
+      {
+        src: '/img/projects/facturacion-arca/cover.svg',
+        width: 1600,
+        height: 800,
+        alt: {
+          es: 'Ilustración: el flujo venta → WSAA → WSFE → PDF y una factura B autorizada con CAE y QR (datos ficticios)',
+          en: 'Illustration: the sale → WSAA → WSFE → PDF flow and an authorized type B invoice with CAE and QR (fictitious data)',
         },
       },
     ],

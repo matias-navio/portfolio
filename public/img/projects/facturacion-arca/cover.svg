@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" width="1600" height="800">
+<defs>
+  <radialGradient id="glow" cx="72%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#2d5fe6" stop-opacity=".38"/><stop offset="1" stop-color="#2d5fe6" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#16275a" stop-opacity=".9"/><stop offset="1" stop-color="#0b1a42" stop-opacity=".9"/>
+  </linearGradient>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#8fa9ff" stroke-opacity=".07"/>
+  </pattern>
+</defs>
+<rect width="1600" height="800" fill="#061029"/><rect width="1600" height="800" fill="url(#grid)"/><rect width="1600" height="800" fill="url(#glow)"/>
+<text x="130" y="120" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="14" letter-spacing="3" fill="#9299b3">DE LA VENTA AL COMPROBANTE</text>
+<line x1="180" x2="180" y1="220.0" y2="598.0" stroke="#8fa9ff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="4 7"/>
+<rect x="136" y="178" width="560" height="100" rx="18" fill="#000" opacity=".28"/>
+<rect x="130" y="170" width="560" height="100" rx="18" fill="url(#card)" stroke="#8fa9ff" stroke-opacity="0.2"/>
+<circle cx="180" cy="220.0" r="22" fill="#16275a" stroke="#8fa9ff" stroke-opacity=".6"/>
+<text x="180" y="226.0" text-anchor="middle" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="17" font-weight="700" fill="#f7f3ec">1</text>
+<text x="228" y="204" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2.5" fill="#8fa9ff">VENTA</text>
+<text x="228" y="232" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="21" font-weight="600" fill="#f7f3ec">POST /invoice/nuevaFactura</text>
+<text x="228" y="254" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="15" fill="#c4c4cf">Valida la venta y que no tenga factura</text>
+<rect x="136" y="304" width="560" height="100" rx="18" fill="#000" opacity=".28"/>
+<rect x="130" y="296" width="560" height="100" rx="18" fill="url(#card)" stroke="#8fa9ff" stroke-opacity="0.2"/>
+<circle cx="180" cy="346.0" r="22" fill="#16275a" stroke="#8fa9ff" stroke-opacity=".6"/>
+<text x="180" y="352.0" text-anchor="middle" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="17" font-weight="700" fill="#f7f3ec">2</text>
+<text x="228" y="330" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2.5" fill="#8fa9ff">WSAA</text>
+<text x="228" y="358" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="21" font-weight="600" fill="#f7f3ec">Firma CMS con el certificado</text>
+<text x="228" y="380" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="15" fill="#c4c4cf">Token reutilizado durante 12 h</text>
+<rect x="136" y="430" width="560" height="100" rx="18" fill="#000" opacity=".28"/>
+<rect x="130" y="422" width="560" height="100" rx="18" fill="url(#card)" stroke="#ff6a3d" stroke-opacity="0.6"/>
+<circle cx="180" cy="472.0" r="22" fill="#ff6a3d" stroke="#ff6a3d" stroke-opacity=".6"/>
+<text x="180" y="478.0" text-anchor="middle" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="17" font-weight="700" fill="#061029">3</text>
+<text x="228" y="456" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2.5" fill="#ff6a3d">WSFE</text>
+<text x="228" y="484" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="21" font-weight="600" fill="#f7f3ec">Último número autorizado + 1</text>
+<text x="228" y="506" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="15" fill="#c4c4cf">ARCA devuelve el CAE</text>
+<g transform="translate(540 444)"><rect width="128" height="28" rx="14" fill="#ff6a3d" fill-opacity=".14" stroke="#ff6a3d" stroke-opacity=".6"/><text x="64" y="19" text-anchor="middle" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="12" fill="#ff6a3d">CAE ✓</text></g>
+<rect x="136" y="556" width="560" height="100" rx="18" fill="#000" opacity=".28"/>
+<rect x="130" y="548" width="560" height="100" rx="18" fill="url(#card)" stroke="#8fa9ff" stroke-opacity="0.2"/>
+<circle cx="180" cy="598.0" r="22" fill="#16275a" stroke="#8fa9ff" stroke-opacity=".6"/>
+<text x="180" y="604.0" text-anchor="middle" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="17" font-weight="700" fill="#f7f3ec">4</text>
+<text x="228" y="582" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2.5" fill="#8fa9ff">PDF</text>
+<text x="228" y="610" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="21" font-weight="600" fill="#f7f3ec">Comprobante con QR fiscal</text>
+<text x="228" y="632" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="15" fill="#c4c4cf">Se guarda junto a la venta</text>
+<path d="M698 598.0 C760 598.0, 750 470, 870 470" fill="none" stroke="#8fa9ff" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 7"/>
+<circle cx="870" cy="470" r="5" fill="#ff6a3d"/>
+<g transform="rotate(-2.5 1160.0 404.0)">
+<rect x="900" y="82" width="540" height="676" rx="10" fill="#000" opacity=".4"/>
+<rect x="890" y="66" width="540" height="676" rx="10" fill="#f6f2ea"/>
+<text x="924" y="118" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="20" font-weight="700" fill="#2b3350">Tu Negocio S.A.</text>
+<rect x="924" y="134" width="150" height="7" rx="3" fill="#2b3350" opacity=".22"/>
+<rect x="924" y="149" width="120" height="7" rx="3" fill="#2b3350" opacity=".22"/>
+<rect x="924" y="164" width="136" height="7" rx="3" fill="#2b3350" opacity=".22"/>
+<rect x="1128.0" y="92" width="64" height="70" rx="6" fill="none" stroke="#2b3350" stroke-width="2"/>
+<text x="1160.0" y="138" text-anchor="middle" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="40" font-weight="700" fill="#2b3350">B</text>
+<text x="1160.0" y="155" text-anchor="middle" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="10" fill="#2b3350" opacity=".7">COD. 06</text>
+<line x1="1160.0" x2="1160.0" y1="162" y2="194" stroke="#2b3350" stroke-opacity=".3"/>
+<text x="1396" y="116" text-anchor="end" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#2b3350">FACTURA</text>
+<text x="1396" y="140" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">N° 0003-00000128</text>
+<text x="1396" y="160" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350" opacity=".7">27/11/2026</text>
+<line x1="924" x2="1396" y1="194" y2="194" stroke="#2b3350" stroke-opacity=".3"/>
+<text x="924" y="222" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1.5" fill="#2b3350" opacity=".6">CLIENTE</text>
+<text x="924" y="244" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="15" fill="#2b3350">Consumidor Final</text>
+<rect x="1180.0" y="234" width="140" height="7" rx="3" fill="#2b3350" opacity=".22"/>
+<rect x="924" y="280" width="472" height="30" rx="4" fill="#2b3350" opacity=".08"/>
+<text x="936" y="300" text-anchor="start" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1" fill="#2b3350" opacity=".7">DESCRIPCIÓN</text>
+<text x="1194" y="300" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1" fill="#2b3350" opacity=".7">CANT.</text>
+<text x="1294" y="300" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1" fill="#2b3350" opacity=".7">PRECIO</text>
+<text x="1384" y="300" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1" fill="#2b3350" opacity=".7">SUBTOTAL</text>
+<rect x="936" y="329" width="170" height="9" rx="3" fill="#2b3350" opacity=".3"/>
+<text x="1194" y="338" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">2</text>
+<text x="1294" y="338" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">12.100,00</text>
+<text x="1384" y="338" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">24.200,00</text>
+<line x1="924" x2="1396" y1="352" y2="352" stroke="#2b3350" stroke-opacity=".1"/>
+<rect x="936" y="363" width="130" height="9" rx="3" fill="#2b3350" opacity=".3"/>
+<text x="1194" y="372" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">1</text>
+<text x="1294" y="372" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">15.730,00</text>
+<text x="1384" y="372" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">15.730,00</text>
+<line x1="924" x2="1396" y1="386" y2="386" stroke="#2b3350" stroke-opacity=".1"/>
+<rect x="936" y="397" width="150" height="9" rx="3" fill="#2b3350" opacity=".3"/>
+<text x="1194" y="406" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">2</text>
+<text x="1294" y="406" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">4.235,00</text>
+<text x="1384" y="406" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#2b3350">8.470,00</text>
+<line x1="924" x2="1396" y1="420" y2="420" stroke="#2b3350" stroke-opacity=".1"/>
+<text x="1224" y="460" text-anchor="end" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="14" fill="#2b3350" opacity=".7">Subtotal</text>
+<text x="1384" y="460" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="14" fill="#2b3350">48.400,00</text>
+<rect x="1124" y="476" width="272" height="44" rx="6" fill="#2b3350"/>
+<text x="1144" y="505" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#f6f2ea">TOTAL</text>
+<text x="1382" y="505" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="20" font-weight="700" fill="#f6f2ea">$ 48.400,00</text>
+<line x1="924" x2="1396" y1="548" y2="548" stroke="#2b3350" stroke-opacity=".3" stroke-dasharray="5 5"/>
+<rect x="918" y="562" width="137" height="137" fill="#fff"/>
+<path d="M964 568h5v5h-5zM969 568h5v5h-5zM979 568h5v5h-5zM989 568h5v5h-5zM994 568h5v5h-5zM1004 568h5v5h-5zM964 573h5v5h-5zM969 573h5v5h-5zM974 573h5v5h-5zM979 573h5v5h-5zM989 573h5v5h-5zM994 573h5v5h-5zM969 578h5v5h-5zM979 578h5v5h-5zM989 578h5v5h-5zM994 578h5v5h-5zM999 578h5v5h-5zM1004 578h5v5h-5zM969 583h5v5h-5zM984 583h5v5h-5zM994 583h5v5h-5zM999 583h5v5h-5zM1004 583h5v5h-5zM969 588h5v5h-5zM974 588h5v5h-5zM984 588h5v5h-5zM989 588h5v5h-5zM1004 588h5v5h-5zM984 593h5v5h-5zM994 593h5v5h-5zM999 593h5v5h-5zM964 598h5v5h-5zM974 598h5v5h-5zM999 598h5v5h-5zM974 603h5v5h-5zM999 603h5v5h-5zM939 608h5v5h-5zM944 608h5v5h-5zM954 608h5v5h-5zM959 608h5v5h-5zM964 608h5v5h-5zM969 608h5v5h-5zM974 608h5v5h-5zM984 608h5v5h-5zM989 608h5v5h-5zM994 608h5v5h-5zM1004 608h5v5h-5zM1009 608h5v5h-5zM1034 608h5v5h-5zM1039 608h5v5h-5zM1044 608h5v5h-5zM934 613h5v5h-5zM939 613h5v5h-5zM944 613h5v5h-5zM949 613h5v5h-5zM964 613h5v5h-5zM969 613h5v5h-5zM974 613h5v5h-5zM979 613h5v5h-5zM1014 613h5v5h-5zM1039 613h5v5h-5zM1044 613h5v5h-5zM924 618h5v5h-5zM934 618h5v5h-5zM939 618h5v5h-5zM944 618h5v5h-5zM949 618h5v5h-5zM954 618h5v5h-5zM959 618h5v5h-5zM964 618h5v5h-5zM969 618h5v5h-5zM974 618h5v5h-5zM979 618h5v5h-5zM984 618h5v5h-5zM999 618h5v5h-5zM1004 618h5v5h-5zM1009 618h5v5h-5zM1014 618h5v5h-5zM1019 618h5v5h-5zM1034 618h5v5h-5zM1044 618h5v5h-5zM924 623h5v5h-5zM929 623h5v5h-5zM934 623h5v5h-5zM944 623h5v5h-5zM949 623h5v5h-5zM964 623h5v5h-5zM974 623h5v5h-5zM999 623h5v5h-5zM1004 623h5v5h-5zM1009 623h5v5h-5zM1029 623h5v5h-5zM1034 623h5v5h-5zM944 628h5v5h-5zM954 628h5v5h-5zM959 628h5v5h-5zM964 628h5v5h-5zM969 628h5v5h-5zM974 628h5v5h-5zM989 628h5v5h-5zM1009 628h5v5h-5zM1014 628h5v5h-5zM1019 628h5v5h-5zM1024 628h5v5h-5zM1029 628h5v5h-5zM939 633h5v5h-5zM969 633h5v5h-5zM979 633h5v5h-5zM994 633h5v5h-5zM999 633h5v5h-5zM1014 633h5v5h-5zM1019 633h5v5h-5zM1024 633h5v5h-5zM1039 633h5v5h-5zM934 638h5v5h-5zM944 638h5v5h-5zM949 638h5v5h-5zM974 638h5v5h-5zM989 638h5v5h-5zM994 638h5v5h-5zM999 638h5v5h-5zM1004 638h5v5h-5zM1014 638h5v5h-5zM1019 638h5v5h-5zM1024 638h5v5h-5zM1034 638h5v5h-5zM1039 638h5v5h-5zM929 643h5v5h-5zM954 643h5v5h-5zM959 643h5v5h-5zM964 643h5v5h-5zM969 643h5v5h-5zM979 643h5v5h-5zM999 643h5v5h-5zM1019 643h5v5h-5zM1029 643h5v5h-5zM1034 643h5v5h-5zM939 648h5v5h-5zM964 648h5v5h-5zM999 648h5v5h-5zM1019 648h5v5h-5zM1024 648h5v5h-5zM1029 648h5v5h-5zM1034 648h5v5h-5zM1039 648h5v5h-5zM1044 648h5v5h-5zM979 653h5v5h-5zM994 653h5v5h-5zM1009 653h5v5h-5zM1019 653h5v5h-5zM1039 653h5v5h-5zM1044 653h5v5h-5zM969 658h5v5h-5zM974 658h5v5h-5zM979 658h5v5h-5zM989 658h5v5h-5zM999 658h5v5h-5zM1004 658h5v5h-5zM1009 658h5v5h-5zM1024 658h5v5h-5zM1044 658h5v5h-5zM964 663h5v5h-5zM969 663h5v5h-5zM979 663h5v5h-5zM984 663h5v5h-5zM989 663h5v5h-5zM1004 663h5v5h-5zM1009 663h5v5h-5zM1029 663h5v5h-5zM1034 663h5v5h-5zM1044 663h5v5h-5zM964 668h5v5h-5zM984 668h5v5h-5zM994 668h5v5h-5zM1004 668h5v5h-5zM1009 668h5v5h-5zM1024 668h5v5h-5zM1029 668h5v5h-5zM1039 668h5v5h-5zM1044 668h5v5h-5zM964 673h5v5h-5zM969 673h5v5h-5zM974 673h5v5h-5zM979 673h5v5h-5zM984 673h5v5h-5zM994 673h5v5h-5zM1004 673h5v5h-5zM1009 673h5v5h-5zM1014 673h5v5h-5zM1019 673h5v5h-5zM1024 673h5v5h-5zM1039 673h5v5h-5zM969 678h5v5h-5zM979 678h5v5h-5zM994 678h5v5h-5zM1014 678h5v5h-5zM1034 678h5v5h-5zM1039 678h5v5h-5zM1044 678h5v5h-5zM964 683h5v5h-5zM969 683h5v5h-5zM979 683h5v5h-5zM984 683h5v5h-5zM989 683h5v5h-5zM1009 683h5v5h-5zM1014 683h5v5h-5zM1019 683h5v5h-5zM1024 683h5v5h-5zM1029 683h5v5h-5zM1034 683h5v5h-5zM1039 683h5v5h-5zM974 688h5v5h-5zM984 688h5v5h-5zM989 688h5v5h-5zM994 688h5v5h-5zM999 688h5v5h-5zM1014 688h5v5h-5zM1024 688h5v5h-5zM1029 688h5v5h-5zM1034 688h5v5h-5zM1039 688h5v5h-5zM1044 688h5v5h-5z" fill="#2b3350"/>
+<rect x="924" y="568" width="35" height="35" fill="#2b3350"/>
+<rect x="929" y="573" width="25" height="25" fill="#fff"/>
+<rect x="934" y="578" width="15" height="15" fill="#2b3350"/>
+<rect x="1014" y="568" width="35" height="35" fill="#2b3350"/>
+<rect x="1019" y="573" width="25" height="25" fill="#fff"/>
+<rect x="1024" y="578" width="15" height="15" fill="#2b3350"/>
+<rect x="924" y="658" width="35" height="35" fill="#2b3350"/>
+<rect x="929" y="663" width="25" height="25" fill="#fff"/>
+<rect x="934" y="668" width="15" height="15" fill="#2b3350"/>
+<text x="1083" y="588" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1.5" fill="#2b3350" opacity=".6">CAE N°</text>
+<text x="1083" y="614" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="22" font-weight="700" fill="#2b3350">7631 2985 5312 07</text>
+<text x="1083" y="642" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="11" letter-spacing="1.5" fill="#2b3350" opacity=".6">VTO. CAE  07/12/2026</text>
+<g transform="translate(1083 660)"><rect width="214" height="32" rx="16" fill="#ff6a3d" fill-opacity=".14" stroke="#ff6a3d"/><circle cx="18" cy="16" r="5" fill="#ff6a3d"/><text x="32" y="21" font-family="'Segoe UI', Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#c2410c">Comprobante autorizado</text></g>
+</g>
+</svg>
