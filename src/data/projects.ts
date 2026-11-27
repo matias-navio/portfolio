@@ -19,10 +19,18 @@ export interface EngineeringNote {
   tags: string[];
 }
 
+/** Business result shown prominently on cards and the project page. */
+export interface ProjectImpact {
+  /** Short figure such as "+24%". Omit for qualitative results. */
+  metric?: string;
+  label: L;
+}
+
 export interface Project {
   slug: string;
   title: string;
   featured?: boolean;
+  impact?: ProjectImpact;
   url?: string;
   kind: L;
   role: L;
@@ -38,6 +46,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'belmora',
+    impact: { metric: '+24%', label: { es: 'más ventas online', en: 'more online sales' } },
     title: 'Belmora',
     featured: true,
     url: 'https://www.belmora-perfumes.site/',
@@ -146,6 +155,7 @@ export const projects: Project[] = [
   },
   {
     slug: '100-moda',
+    impact: { metric: '−30%', label: { es: 'menos tiempo en caja', en: 'less time at the checkout' } },
     title: '100% Moda',
     kind: { es: 'Sistema de gestión', en: 'Management system' },
     role: { es: 'Backend completo', en: 'Full backend' },
@@ -264,129 +274,6 @@ export const projects: Project[] = [
         width: 1600,
         height: 796,
         alt: { es: 'Análisis RFM con segmentos y ranking (clientes y montos difuminados)', en: 'RFM analysis with segments and ranking (customers and amounts blurred)' },
-      },
-    ],
-  },
-  {
-    slug: 'malbestock-crm',
-    title: 'Malbestock CRM',
-    kind: { es: 'Backoffice SaaS', en: 'SaaS back office' },
-    role: { es: 'Desarrollo principal · Malbecode', en: 'Lead developer · Malbecode' },
-    summary: {
-      es: 'CRM interno del ERP Malbestock: leads, cuentas, cobros y partners, alimentado solo por lo que pasa en el sistema.',
-      en: 'Internal CRM for the Malbestock ERP: leads, accounts, billing and partners, fed by what happens in the product itself.',
-    },
-    context: {
-      es: 'Backoffice donde en Malbecode gestionamos los leads y clientes de Malbestock, nuestro ERP para comercios. Lo que cada usuario hace en su cuenta se refleja solo en el CRM, sin cargar nada a mano.',
-      en: 'Back office where we at Malbecode manage the leads and customers of Malbestock, our ERP for small businesses. What each user does in their account shows up in the CRM on its own, with no manual data entry.',
-    },
-    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase · RLS', 'PostgreSQL', 'Recharts'],
-    features: [
-      {
-        title: { es: 'Leads automáticos', en: 'Automatic leads' },
-        body: {
-          es: 'Quien se registra aparece solo en la columna de interesados, con los datos del onboarding.',
-          en: 'Anyone who signs up lands in the “interested” column on their own, with their onboarding data.',
-        },
-      },
-      {
-        title: { es: 'Estado de cada cuenta', en: 'Account status' },
-        body: {
-          es: 'Sin actividad, Cargó productos o Vendiendo, más los productos y ventas del mes.',
-          en: 'No activity, Loaded products or Selling, plus the month’s products and sales.',
-        },
-      },
-      {
-        title: { es: 'Última actividad real', en: 'Real last activity' },
-        body: {
-          es: 'Se actualiza con cualquier clic o movimiento del mouse dentro de la cuenta.',
-          en: 'Updated by any click or mouse movement inside the account.',
-        },
-      },
-      {
-        title: { es: 'Prospección en kanban', en: 'Prospecting kanban' },
-        body: {
-          es: 'Fases, temperatura, canal, responsable y recordatorios de recontacto.',
-          en: 'Stages, temperature, channel, owner and follow-up reminders.',
-        },
-      },
-      {
-        title: { es: 'Cobros y suscripciones', en: 'Billing and subscriptions' },
-        body: {
-          es: 'MRR, próximos cobros, cobros vencidos y conversión a pago.',
-          en: 'MRR, upcoming charges, overdue charges and paid conversion.',
-        },
-      },
-      {
-        title: { es: 'Programa de partners', en: 'Partner program' },
-        body: {
-          es: 'Cada partner tiene su código, y las cuentas que se registran con él le suman un porcentaje de cada pago.',
-          en: 'Each partner has a code, and accounts that sign up with it earn the partner a share of every payment.',
-        },
-      },
-    ],
-    engineering: [
-      {
-        icon: 'sync',
-        title: { es: 'Un CRM que se llena solo', en: 'A CRM that fills itself' },
-        points: [
-          { es: 'Un trigger en Postgres crea el lead cuando el usuario termina el onboarding.', en: 'A Postgres trigger creates the lead when the user finishes onboarding.' },
-          { es: 'El estado de cada cuenta se calcula en la base, así el filtro y la etiqueta nunca difieren.', en: 'Each account’s status is computed in the database, so the filter and the badge never disagree.' },
-        ],
-        tags: ['PostgreSQL', 'Triggers'],
-      },
-      {
-        icon: 'bolt',
-        title: { es: 'Actividad sin saturar la base', en: 'Activity without flooding the DB' },
-        points: [
-          { es: 'Un latido en el navegador escribe como mucho una vez por minuto.', en: 'A browser heartbeat writes at most once a minute.' },
-          { es: 'Sólo si la pestaña está visible y hubo interacción en los últimos 10 minutos.', en: 'Only when the tab is visible and there was interaction in the last 10 minutes.' },
-        ],
-        tags: ['React', 'Supabase'],
-      },
-      {
-        icon: 'lock',
-        title: { es: 'Comisiones a prueba de disputas', en: 'Dispute-proof commissions' },
-        points: [
-          { es: 'Cada negocio queda atado a un solo partner, para siempre. Las tablas sólo se tocan desde funciones que validan al admin.', en: 'Each business is tied to a single partner, forever. Tables are only reachable through functions that verify the admin.' },
-          { es: 'La comisión sube con las cuentas activas y nunca baja; cada liquidación guarda el detalle por negocio.', en: 'The commission rises with active accounts and never drops; each settlement keeps a per-business breakdown.' },
-        ],
-        tags: ['Supabase · RLS', 'RPC'],
-      },
-    ],
-    images: [
-      {
-        src: '/img/projects/malbestock-crm/cover.svg',
-        width: 1600,
-        height: 800,
-        alt: {
-          es: 'Ilustración: lo que el usuario hace en su cuenta (onboarding, productos, ventas, actividad, código de partner) actualiza solo la ficha del lead en el CRM',
-          en: 'Illustration: what the user does in their account (onboarding, products, sales, activity, partner code) updates the lead card in the CRM on its own',
-        },
-      },
-      {
-        src: '/img/projects/malbestock-crm/crm.webp',
-        width: 1600,
-        height: 792,
-        alt: { es: 'Kanban de prospección por fases (datos difuminados)', en: 'Prospecting kanban by stage (data blurred)' },
-      },
-      {
-        src: '/img/projects/malbestock-crm/pagos.webp',
-        width: 1600,
-        height: 795,
-        alt: { es: 'Pagos y suscripciones: MRR, cobros vencidos y próximos cobros (datos difuminados)', en: 'Billing and subscriptions: MRR, overdue and upcoming charges (data blurred)' },
-      },
-      {
-        src: '/img/projects/malbestock-crm/estadisticas.webp',
-        width: 1600,
-        height: 791,
-        alt: { es: 'Estadísticas: embudo de cohortes y fuentes de tráfico (datos difuminados)', en: 'Analytics: cohort funnel and traffic sources (data blurred)' },
-      },
-      {
-        src: '/img/projects/malbestock-crm/partners.webp',
-        width: 1600,
-        height: 790,
-        alt: { es: 'Partners con su código, registros y referidos (datos difuminados)', en: 'Partners with their code, sign-ups and referrals (data blurred)' },
       },
     ],
   },
@@ -523,6 +410,136 @@ export const projects: Project[] = [
         width: 1600,
         height: 794,
         alt: { es: 'Listado de clientes con sucursal y deuda (datos personales y montos difuminados)', en: 'Customer list with branch and debt (personal data and amounts blurred)' },
+      },
+    ],
+  },
+  {
+    slug: 'malbestock-crm',
+    featured: true,
+    impact: {
+      label: {
+        es: 'Visión clara de los números de leads para tomar decisiones',
+        en: 'A clear view of lead numbers to make decisions on',
+      },
+    },
+    title: 'Malbestock CRM',
+    kind: { es: 'Backoffice SaaS', en: 'SaaS back office' },
+    role: { es: 'Desarrollo principal · Malbecode', en: 'Lead developer · Malbecode' },
+    summary: {
+      es: 'CRM interno del ERP Malbestock: leads, cuentas, cobros y partners, alimentado solo por lo que pasa en el sistema.',
+      en: 'Internal CRM for the Malbestock ERP: leads, accounts, billing and partners, fed by what happens in the product itself.',
+    },
+    context: {
+      es: 'Backoffice donde en Malbecode gestionamos los leads y clientes de Malbestock, nuestro ERP para comercios. Lo que cada usuario hace en su cuenta se refleja solo en el CRM, sin cargar nada a mano.',
+      en: 'Back office where we at Malbecode manage the leads and customers of Malbestock, our ERP for small businesses. What each user does in their account shows up in the CRM on its own, with no manual data entry.',
+    },
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase · RLS', 'PostgreSQL', 'Recharts'],
+    features: [
+      {
+        title: { es: 'Leads automáticos', en: 'Automatic leads' },
+        body: {
+          es: 'Quien se registra aparece solo en la columna de interesados, con los datos del onboarding.',
+          en: 'Anyone who signs up lands in the “interested” column on their own, with their onboarding data.',
+        },
+      },
+      {
+        title: { es: 'Estado de cada cuenta', en: 'Account status' },
+        body: {
+          es: 'Sin actividad, Cargó productos o Vendiendo, más los productos y ventas del mes.',
+          en: 'No activity, Loaded products or Selling, plus the month’s products and sales.',
+        },
+      },
+      {
+        title: { es: 'Última actividad real', en: 'Real last activity' },
+        body: {
+          es: 'Se actualiza con cualquier clic o movimiento del mouse dentro de la cuenta.',
+          en: 'Updated by any click or mouse movement inside the account.',
+        },
+      },
+      {
+        title: { es: 'Prospección en kanban', en: 'Prospecting kanban' },
+        body: {
+          es: 'Fases, temperatura, canal, responsable y recordatorios de recontacto.',
+          en: 'Stages, temperature, channel, owner and follow-up reminders.',
+        },
+      },
+      {
+        title: { es: 'Cobros y suscripciones', en: 'Billing and subscriptions' },
+        body: {
+          es: 'MRR, próximos cobros, cobros vencidos y conversión a pago.',
+          en: 'MRR, upcoming charges, overdue charges and paid conversion.',
+        },
+      },
+      {
+        title: { es: 'Programa de partners', en: 'Partner program' },
+        body: {
+          es: 'Cada partner tiene su código, y las cuentas que se registran con él le suman un porcentaje de cada pago.',
+          en: 'Each partner has a code, and accounts that sign up with it earn the partner a share of every payment.',
+        },
+      },
+    ],
+    engineering: [
+      {
+        icon: 'sync',
+        title: { es: 'Un CRM que se llena solo', en: 'A CRM that fills itself' },
+        points: [
+          { es: 'Un trigger en Postgres crea el lead cuando el usuario termina el onboarding.', en: 'A Postgres trigger creates the lead when the user finishes onboarding.' },
+          { es: 'El estado de cada cuenta se calcula en la base, así el filtro y la etiqueta nunca difieren.', en: 'Each account’s status is computed in the database, so the filter and the badge never disagree.' },
+        ],
+        tags: ['PostgreSQL', 'Triggers'],
+      },
+      {
+        icon: 'bolt',
+        title: { es: 'Actividad sin saturar la base', en: 'Activity without flooding the DB' },
+        points: [
+          { es: 'Un latido en el navegador escribe como mucho una vez por minuto.', en: 'A browser heartbeat writes at most once a minute.' },
+          { es: 'Sólo si la pestaña está visible y hubo interacción en los últimos 10 minutos.', en: 'Only when the tab is visible and there was interaction in the last 10 minutes.' },
+        ],
+        tags: ['React', 'Supabase'],
+      },
+      {
+        icon: 'lock',
+        title: { es: 'Comisiones a prueba de disputas', en: 'Dispute-proof commissions' },
+        points: [
+          { es: 'Cada negocio queda atado a un solo partner, para siempre. Las tablas sólo se tocan desde funciones que validan al admin.', en: 'Each business is tied to a single partner, forever. Tables are only reachable through functions that verify the admin.' },
+          { es: 'La comisión sube con las cuentas activas y nunca baja; cada liquidación guarda el detalle por negocio.', en: 'The commission rises with active accounts and never drops; each settlement keeps a per-business breakdown.' },
+        ],
+        tags: ['Supabase · RLS', 'RPC'],
+      },
+    ],
+    images: [
+      {
+        src: '/img/projects/malbestock-crm/cover.svg',
+        width: 1600,
+        height: 800,
+        alt: {
+          es: 'Ilustración: lo que el usuario hace en su cuenta (onboarding, productos, ventas, actividad, código de partner) actualiza solo la ficha del lead en el CRM',
+          en: 'Illustration: what the user does in their account (onboarding, products, sales, activity, partner code) updates the lead card in the CRM on its own',
+        },
+      },
+      {
+        src: '/img/projects/malbestock-crm/crm.webp',
+        width: 1600,
+        height: 792,
+        alt: { es: 'Kanban de prospección por fases (datos difuminados)', en: 'Prospecting kanban by stage (data blurred)' },
+      },
+      {
+        src: '/img/projects/malbestock-crm/pagos.webp',
+        width: 1600,
+        height: 795,
+        alt: { es: 'Pagos y suscripciones: MRR, cobros vencidos y próximos cobros (datos difuminados)', en: 'Billing and subscriptions: MRR, overdue and upcoming charges (data blurred)' },
+      },
+      {
+        src: '/img/projects/malbestock-crm/estadisticas.webp',
+        width: 1600,
+        height: 791,
+        alt: { es: 'Estadísticas: embudo de cohortes y fuentes de tráfico (datos difuminados)', en: 'Analytics: cohort funnel and traffic sources (data blurred)' },
+      },
+      {
+        src: '/img/projects/malbestock-crm/partners.webp',
+        width: 1600,
+        height: 790,
+        alt: { es: 'Partners con su código, registros y referidos (datos difuminados)', en: 'Partners with their code, sign-ups and referrals (data blurred)' },
       },
     ],
   },

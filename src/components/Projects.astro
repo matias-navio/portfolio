@@ -1,16 +1,27 @@
 ---
 import { ui, type Lang } from '../i18n/ui';
-import { projects, projectPath } from '../data/projects';
+import { projects, projectPath, type Project } from '../data/projects';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const p = ui[lang].projects;
-const featured = projects.find((x) => x.featured)!;
-const rest = projects.filter((x) => !x.featured);
 const num = (slug: string) => String(projects.findIndex((x) => x.slug === slug) + 1).padStart(2, '0');
-const cover = featured.images?.[0];
+
+/** Featured projects span the full width; the ones in between flow in a two-column grid. */
+type Segment = { type: 'featured'; item: Project; flip: boolean } | { type: 'grid'; items: Project[] };
+const segments: Segment[] = [];
+let featuredCount = 0;
+for (const item of projects) {
+  if (item.featured) {
+    segments.push({ type: 'featured', item, flip: featuredCount++ % 2 === 1 });
+  } else {
+    const last = segments.at(-1);
+    if (last?.type === 'grid') last.items.push(item);
+    else segments.push({ type: 'grid', items: [item] });
+  }
+}
 ---
 
 <section id="proyectos" class="wrap section" aria-labelledby="projects-h">
@@ -19,59 +30,93 @@ const cover = featured.images?.[0];
     <h2 id="projects-h" class="t-heading-lg sheen">{p.heading}</h2>
   </header>
 
-  <article class="featured glass">
-    <div class="featured-copy">
-      <p class="t-mono idx"><span class="pip" aria-hidden="true"></span>{num(featured.slug)} · {featured.kind[lang]}</p>
-      <h3 class="t-heading">{featured.title}</h3>
-      <p class="featured-body">{featured.summary[lang]}</p>
-      <ul class="badges">{featured.stack.slice(0, 4).map((s) => <li class="badge accent">{s}</li>)}</ul>
-      <div class="featured-actions">
-        <a class="btn btn-ghost" href={projectPath(lang, featured.slug)}>
-          {p.view}
-          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
-        </a>
-        {
-          featured.url && (
-            <a class="btn btn-outline" href={featured.url} target="_blank" rel="noopener">
-              {p.visit}
-              <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
-            </a>
-          )
-        }
-      </div>
-    </div>
-    {
-      cover && (
-        <a class="featured-media" href={projectPath(lang, featured.slug)} tabindex="-1" aria-hidden="true">
-          <img src={cover.src} width={cover.width} height={cover.height} alt="" loading="lazy" decoding="async" />
-        </a>
-      )
-    }
-  </article>
-
-  <ul class="grid">
-    {
-      rest.map((item) => (
-        <li>
-          <a class="card glass" href={projectPath(lang, item.slug)}>
+  {
+    segments.map((seg) =>
+      seg.type === 'featured' ? (
+        <article class:list={['featured glass', { flip: seg.flip }]}>
+          <div class="featured-copy">
             <p class="t-mono idx">
-              {num(item.slug)} · {item.role[lang]}
+              <span class="pip" aria-hidden="true" />
+              {num(seg.item.slug)} · {seg.item.kind[lang]}
             </p>
-            <h3 class="t-heading-sm">{item.title}</h3>
-            <p class="card-body">{item.summary[lang]}</p>
-            <div class="card-foot">
-              <ul class="badges">{item.stack.slice(0, 3).map((s) => <li class="badge quiet">{s}</li>)}</ul>
-              <span class="card-cta" aria-hidden="true">
-                <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <h3 class="t-heading">{seg.item.title}</h3>
+            <p class="featured-body">{seg.item.summary[lang]}</p>
+            {seg.item.impact &&
+              (seg.item.impact.metric ? (
+                <p class="impact">
+                  <span class="impact-metric">{seg.item.impact.metric}</span>
+                  <span class="impact-label">{seg.item.impact.label[lang]}</span>
+                </p>
+              ) : (
+                <p class="impact text">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+                    <path d="M4 20h16M7 16v-4M12 16V8M17 16v-7" />
+                  </svg>
+                  <span class="impact-label">{seg.item.impact.label[lang]}</span>
+                </p>
+              ))}
+            <ul class="badges">
+              {seg.item.stack.slice(0, 4).map((s) => (
+                <li class="badge accent">{s}</li>
+              ))}
+            </ul>
+            <div class="featured-actions">
+              <a class="btn btn-ghost" href={projectPath(lang, seg.item.slug)}>
+                {p.view}
+                <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
-              </span>
+              </a>
+              {seg.item.url && (
+                <a class="btn btn-outline" href={seg.item.url} target="_blank" rel="noopener">
+                  {p.visit}
+                  <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M5 11 11 5M6 5h5v5" />
+                  </svg>
+                </a>
+              )}
             </div>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+          </div>
+          {seg.item.images?.[0] && (
+            <a class="featured-media" href={projectPath(lang, seg.item.slug)} tabindex="-1" aria-hidden="true">
+              <img src={seg.item.images[0].src} width={seg.item.images[0].width} height={seg.item.images[0].height} alt="" loading="lazy" decoding="async" />
+            </a>
+          )}
+        </article>
+      ) : (
+        <ul class="grid">
+          {seg.items.map((item) => (
+            <li>
+              <a class="card glass" href={projectPath(lang, item.slug)}>
+                <p class="t-mono idx">
+                  {num(item.slug)} · {item.role[lang]}
+                </p>
+                <h3 class="t-heading-sm">{item.title}</h3>
+                {item.impact?.metric && (
+                  <p class="impact-pill">
+                    <strong>{item.impact.metric}</strong> {item.impact.label[lang]}
+                  </p>
+                )}
+                <p class="card-body">{item.summary[lang]}</p>
+                <div class="card-foot">
+                  <ul class="badges">
+                    {item.stack.slice(0, 3).map((s) => (
+                      <li class="badge quiet">{s}</li>
+                    ))}
+                  </ul>
+                  <span class="card-cta" aria-hidden="true">
+                    <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M3 8h10M9 4l4 4-4 4" />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ),
+    )
+  }
 </section>
 
 <style>
@@ -256,6 +301,83 @@ const cover = featured.images?.[0];
     }
     .grid {
       grid-template-columns: 1fr;
+    }
+  }
+  /* Business impact */
+  .impact {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--color-ember-soft);
+    box-shadow: inset 0 0 0 1px var(--color-ember-edge);
+  }
+  .impact-metric {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-ember);
+    font-variant-numeric: tabular-nums;
+  }
+  .impact-label {
+    font-size: 15px;
+    color: var(--color-pearl);
+  }
+  .impact.text {
+    align-items: center;
+    max-width: 44ch;
+  }
+  .impact.text svg {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    color: var(--color-ember);
+  }
+  .impact-pill {
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--color-pearl);
+    background: var(--color-ember-soft);
+    box-shadow: inset 0 0 0 1px var(--color-ember-edge);
+  }
+  .impact-pill strong {
+    font-weight: 600;
+    color: var(--color-ember);
+  }
+
+  /* Second featured project: media on the left */
+  .featured.flip {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    padding: 40px 40px 40px 0;
+  }
+  .featured.flip .featured-media {
+    order: -1;
+    padding: 6px 6px 6px 0;
+    border-radius: 0 12px 12px 0;
+  }
+  .featured.flip .featured-media img {
+    border-radius: 0 8px 8px 0;
+  }
+
+  @media (max-width: 880px) {
+    .featured.flip {
+      grid-template-columns: 1fr;
+      padding: 28px 24px 0 0;
+    }
+    .featured.flip .featured-copy {
+      padding: 0 0 0 24px;
+    }
+    .featured.flip .featured-media {
+      order: 0;
+      padding: 6px 6px 0 0;
+      border-radius: 0 12px 0 0;
+    }
+    .featured.flip .featured-media img {
+      border-radius: 0 8px 0 0;
     }
   }
 </style>
