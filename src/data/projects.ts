@@ -548,28 +548,120 @@ export const projects: Project[] = [
     kind: { es: 'MVP B2B', en: 'B2B MVP' },
     role: { es: 'Desarrollo completo', en: 'Full build' },
     summary: {
-      es: 'Panel para operadores de playas de estacionamiento.',
-      en: 'Dashboard for parking lot operators.',
+      es: 'Panel para playas de estacionamiento: disponibilidad en vivo, tarifario por día y horario, y configuración completa del negocio.',
+      en: 'Dashboard for parking lots: live availability, day-and-time pricing and full business setup.',
     },
     context: {
-      es: 'MVP para que las playas de estacionamiento gestionen su operación diaria. Lo armé como monorepo con un contrato de dominio compartido entre la API y la web.',
-      en: 'MVP for parking lots to run their daily operation. Built as a monorepo with a domain contract shared between the API and the web app.',
+      es: 'MVP para que las playas de estacionamiento gestionen su operación diaria. Monorepo con una API en NestJS, una web en React y un paquete compartido con el contrato de dominio y el cálculo de precios.',
+      en: 'MVP for parking lots to run their daily operation. A monorepo with a NestJS API, a React web app and a shared package holding the domain contract and the pricing engine.',
     },
-    stack: ['NestJS', 'React', 'Vite', 'Zod', 'Supabase', 'pnpm workspaces'],
+    stack: ['NestJS', 'TypeScript', 'Supabase · RLS', 'PostgreSQL', 'React', 'Vite', 'Tailwind CSS', 'Zod', 'pnpm workspaces', 'Jest'],
     features: [
       {
-        title: { es: 'Contrato compartido', en: 'Shared contract' },
+        title: { es: 'Login y roles', en: 'Login and roles' },
         body: {
-          es: 'Esquemas Zod en un paquete común que usan tanto la API como el frontend.',
-          en: 'Zod schemas in a shared package used by both the API and the frontend.',
+          es: 'Acceso con Supabase Auth y roles por playa: dueño, encargado y operador.',
+          en: 'Sign-in with Supabase Auth and per-lot roles: owner, manager and operator.',
         },
       },
       {
-        title: { es: 'Monorepo', en: 'Monorepo' },
+        title: { es: 'Disponibilidad en vivo', en: 'Live availability' },
         body: {
-          es: 'API, web y paquete compartido en un mismo repositorio con pnpm workspaces.',
-          en: 'API, web and shared package in one repository with pnpm workspaces.',
+          es: 'Grilla de lugares libres y ocupados que se actualiza sola cada pocos segundos.',
+          en: 'Grid of free and taken spots that refreshes itself every few seconds.',
         },
+      },
+      {
+        title: { es: 'Tarifario flexible', en: 'Flexible pricing' },
+        body: {
+          es: 'Tablas por día y horario para autos y motos, precios por hora, tolerancia y paquetes.',
+          en: 'Day-and-time tables for cars and motorcycles, hourly rates, grace period and bundles.',
+        },
+      },
+      {
+        title: { es: 'Simulador antes de publicar', en: 'Simulator before publishing' },
+        body: {
+          es: 'Muestra qué tabla y qué precio se aplican, y avisa si quedan horarios sin cubrir.',
+          en: 'Shows which table and price apply, and warns about uncovered time slots.',
+        },
+      },
+      {
+        title: { es: 'Configuración completa', en: 'Full setup' },
+        body: {
+          es: 'Datos del negocio y logo, horarios, capacidad y medios de pago.',
+          en: 'Business details and logo, opening hours, capacity and payment methods.',
+        },
+      },
+      {
+        title: { es: 'Varias playas', en: 'Multiple lots' },
+        body: {
+          es: 'Un mismo usuario puede gestionar más de una playa desde el selector.',
+          en: 'One user can manage several lots from the selector.',
+        },
+      },
+    ],
+    engineering: [
+      {
+        icon: 'shield',
+        title: { es: 'Nunca más autos que lugares', en: 'Never more cars than spots' },
+        points: [
+          { es: 'Un trigger en Postgres reserva el lugar con un UPDATE condicional: dos ingresos simultáneos no pueden pasarse de la capacidad.', en: 'A Postgres trigger reserves the spot with a conditional UPDATE: two simultaneous check-ins can’t exceed capacity.' },
+          { es: 'Probado con tests de concurrencia contra la base real.', en: 'Verified with concurrency tests against the real database.' },
+        ],
+        tags: ['PostgreSQL', 'Triggers'],
+      },
+      {
+        icon: 'lock',
+        title: { es: 'Cada playa aislada', en: 'Each lot isolated' },
+        points: [
+          { es: 'Políticas RLS separan los datos de cada playa y cada rol.', en: 'RLS policies keep each lot’s and each role’s data apart.' },
+          { es: 'Las membresías viajan en el token: el permiso se chequea sin consultar la base en cada request.', en: 'Memberships ride in the token: permissions are checked without querying the database on every request.' },
+        ],
+        tags: ['Supabase · RLS', 'JWT'],
+      },
+      {
+        icon: 'check',
+        title: { es: 'Precios que no fallan', en: 'Pricing you can trust' },
+        points: [
+          { es: 'El cálculo vive en un paquete compartido y se prueba en cada límite de tramo, un minuto antes y uno después.', en: 'The pricing engine lives in a shared package and is tested at every bracket boundary, one minute before and after.' },
+          { es: 'Tarifarios versionados: borrador, publicación validada e historial.', en: 'Versioned rate sheets: draft, validated publishing and history.' },
+        ],
+        tags: ['Zod', 'Vitest'],
+      },
+    ],
+    images: [
+      {
+        src: '/img/projects/estacionapp/cover.svg',
+        width: 1600,
+        height: 800,
+        alt: {
+          es: 'Ilustración: vista aérea de una playa de estacionamiento sincronizada con el panel de disponibilidad y tarifas',
+          en: 'Illustration: aerial view of a parking lot synced with the availability and pricing dashboard',
+        },
+      },
+      {
+        src: '/img/projects/estacionapp/login.webp',
+        width: 1600,
+        height: 792,
+        alt: { es: 'Login con Supabase Auth', en: 'Login with Supabase Auth' },
+      },
+      {
+        src: '/img/projects/estacionapp/configuracion.webp',
+        width: 1600,
+        height: 796,
+        alt: { es: 'Configuración del negocio: identidad, logo, ubicación y contacto (CUIT difuminado)', en: 'Business setup: identity, logo, location and contact (tax ID blurred)' },
+      },
+      {
+        src: '/img/projects/estacionapp/disponibilidad.webp',
+        width: 1600,
+        height: 791,
+        alt: { es: 'Disponibilidad en vivo con la grilla de lugares', en: 'Live availability with the spots grid' },
+      },
+      {
+        src: '/img/projects/estacionapp/tarifas.webp',
+        width: 1600,
+        height: 794,
+        alt: { es: 'Tarifario: tabla por días y horario con filas de precio por hora', en: 'Pricing: table by days and time window with hourly price rows' },
       },
     ],
   },
