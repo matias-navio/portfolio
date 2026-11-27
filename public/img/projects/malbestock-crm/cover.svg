@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" width="1600" height="800">
+<defs>
+  <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+    <path d="M80 0H0V80" fill="none" stroke="#33261d" stroke-opacity=".05"/>
+  </pattern>
+  <radialGradient id="halo" cx="70%" cy="50%" r="45%">
+    <stop offset="0" stop-color="#7a5fd2" stop-opacity=".12"/><stop offset="1" stop-color="#7a5fd2" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="soft" x="-20%" y="-20%" width="140%" height="160%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#33261d" flood-opacity=".10"/>
+  </filter>
+</defs>
+<rect width="1600" height="800" fill="#fbf9f5"/><rect width="1600" height="800" fill="url(#grid)"/><rect width="1600" height="800" fill="url(#halo)"/>
+<text x="110" y="118" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="14" letter-spacing="3" fill="#33261d" fill-opacity=".55">EN LA CUENTA DEL USUARIO</text>
+<rect x="110" y="160" width="520" height="82" rx="18" fill="#fefbf6" stroke="#33261d" stroke-opacity=".10" filter="url(#soft)"/>
+<rect x="128" y="177" width="48" height="48" rx="14" fill="#7a5fd2" fill-opacity=".12"/>
+<g fill="none" stroke="#7a5fd2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="152" cy="196" r="6"/><path d="M141 212c1-7 6-10 11-10s10 3 11 10"/></g>
+<text x="196" y="198" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="-.3" fill="#33261d">Completa el onboarding</text>
+<text x="196" y="221" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#33261d" fill-opacity=".55">alta del negocio</text>
+<rect x="110" y="260" width="520" height="82" rx="18" fill="#fefbf6" stroke="#33261d" stroke-opacity=".10" filter="url(#soft)"/>
+<rect x="128" y="277" width="48" height="48" rx="14" fill="#00a1db" fill-opacity=".12"/>
+<g fill="none" stroke="#00a1db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M141 296l11-6 11 6v12l-11 6-11-6z"/><path d="M141 296l11 6 11-6M152 302v12"/></g>
+<text x="196" y="298" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="-.3" fill="#33261d">Carga su primer producto</text>
+<text x="196" y="321" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#33261d" fill-opacity=".55">producto nuevo</text>
+<rect x="110" y="360" width="520" height="82" rx="18" fill="#fefbf6" stroke="#33261d" stroke-opacity=".10" filter="url(#soft)"/>
+<rect x="128" y="377" width="48" height="48" rx="14" fill="#51b67a" fill-opacity=".12"/>
+<g fill="none" stroke="#51b67a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M139 391h4l3 14h14l3-10H145"/><circle cx="148" cy="410" r="1.8"/><circle cx="158" cy="410" r="1.8"/></g>
+<text x="196" y="398" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="-.3" fill="#33261d">Registra una venta</text>
+<text x="196" y="421" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#33261d" fill-opacity=".55">venta nueva</text>
+<rect x="110" y="460" width="520" height="82" rx="18" fill="#fefbf6" stroke="#33261d" stroke-opacity=".10" filter="url(#soft)"/>
+<rect x="128" y="477" width="48" height="48" rx="14" fill="#de8a3a" fill-opacity=".12"/>
+<path d="M144 489l17 9-8 2-3 8z" fill="#de8a3a" fill-opacity=".18" stroke="#de8a3a" stroke-width="2" stroke-linejoin="round"/>
+<text x="196" y="498" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="-.3" fill="#33261d">Hace clic o mueve el mouse</text>
+<text x="196" y="521" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#33261d" fill-opacity=".55">actividad · cada 60 s</text>
+<rect x="110" y="560" width="520" height="82" rx="18" fill="#fefbf6" stroke="#33261d" stroke-opacity=".10" filter="url(#soft)"/>
+<rect x="128" y="577" width="48" height="48" rx="14" fill="#c7a01e" fill-opacity=".12"/>
+<g fill="none" stroke="#c7a01e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M140 599v-10h10l13 13-10 10z"/><circle cx="146" cy="595" r="1.8"/></g>
+<text x="196" y="598" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="-.3" fill="#33261d">Se registró con un código</text>
+<text x="196" y="621" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#33261d" fill-opacity=".55">partner · referido</text>
+<text x="930" y="118" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="14" letter-spacing="3" fill="#7a5fd2" fill-opacity=".9">EN EL CRM · SIN CARGAR NADA A MANO</text>
+<rect x="958" y="158" width="504" height="560" rx="24" fill="#00a1db" fill-opacity=".08"/>
+<rect x="930" y="172" width="560" height="538" rx="24" fill="#ffffff" stroke="#33261d" stroke-opacity=".10" filter="url(#soft)"/>
+<rect x="964" y="200" width="128" height="30" rx="15" fill="#00a1db" fill-opacity=".12"/>
+<circle cx="982" cy="215" r="5" fill="#00a1db"/><text x="996" y="220" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" font-weight="600" fill="#00a1db">Interesado</text>
+<text x="1456" y="220" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#33261d" fill-opacity=".5">lead automático</text>
+<text x="964" y="276" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="30" font-weight="600" letter-spacing="-.8" fill="#33261d">Almacén La Esquina</text>
+<text x="964" y="304" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="16" fill="#33261d" fill-opacity=".6">Se registró por su cuenta · datos del onboarding</text>
+<text x="964" y="348" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2" fill="#33261d" fill-opacity=".5">ESTADO DE LA CUENTA</text>
+<rect x="964" y="364" width="150" height="40" rx="20" fill="#fbf9f5" stroke="#33261d" stroke-opacity=".14"/>
+<text x="1039.0" y="389" text-anchor="middle" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" fill="#33261d" fill-opacity=".45">Sin actividad</text>
+<path d="M1118 384h14m-5 -5l5 5-5 5" fill="none" stroke="#7a5fd2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1136" y="364" width="150" height="40" rx="20" fill="#fbf9f5" stroke="#33261d" stroke-opacity=".14"/>
+<text x="1211.0" y="389" text-anchor="middle" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" fill="#33261d" fill-opacity=".45">Cargó productos</text>
+<path d="M1290 384h14m-5 -5l5 5-5 5" fill="none" stroke="#7a5fd2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1308" y="364" width="150" height="40" rx="20" fill="#7a5fd2"/>
+<text x="1383.0" y="389" text-anchor="middle" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" font-weight="600" fill="#fff">Vendiendo</text>
+<rect x="964.0" y="432" width="237.0" height="92" rx="16" fill="#00a1db" fill-opacity=".07"/>
+<text x="984.0" y="464" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" fill="#33261d" fill-opacity=".6">Productos este mes</text>
+<text x="984.0" y="504" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="36" font-weight="700" letter-spacing="-1" fill="#33261d">48</text>
+<rect x="1219.0" y="432" width="237.0" height="92" rx="16" fill="#51b67a" fill-opacity=".07"/>
+<text x="1239.0" y="464" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" fill="#33261d" fill-opacity=".6">Ventas este mes</text>
+<text x="1239.0" y="504" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="36" font-weight="700" letter-spacing="-1" fill="#33261d">126</text>
+<circle cx="972" cy="560" r="6" fill="#51b67a"/><circle cx="972" cy="560" r="13" fill="none" stroke="#51b67a" stroke-opacity=".35"/>
+<text x="994" y="566" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="17" fill="#33261d">Última actividad</text>
+<text x="1456" y="566" text-anchor="end" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="16" font-weight="700" fill="#33261d">hace 1 min</text>
+<line x1="964" x2="1456" y1="594" y2="594" stroke="#33261d" stroke-opacity=".08"/>
+<rect x="964" y="618" width="492" height="70" rx="16" fill="#c7a01e" fill-opacity=".08" stroke="#c7a01e" stroke-opacity=".55" stroke-dasharray="6 5"/>
+<g fill="none" stroke="#c7a01e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M984 653v-10h10l13 13-10 10z"/><circle cx="990" cy="649" r="1.8"/></g>
+<text x="1022" y="648" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="15" fill="#33261d" fill-opacity=".6">Partner</text>
+<text x="1022" y="671" font-family="Consolas, 'JetBrains Mono', ui-monospace, monospace" font-size="16" font-weight="700" fill="#33261d">LUCIA-24</text>
+<text x="1436" y="662" text-anchor="end" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="600" fill="#1e1a16">20 % de cada pago</text>
+<path d="M636 201.0 C770 201.0, 782 262, 922 262" fill="none" stroke="#7a5fd2" stroke-opacity=".55" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+<circle cx="922" cy="262" r="5" fill="#7a5fd2"/>
+<path d="M636 301.0 C770 301.0, 782 384, 922 384" fill="none" stroke="#00a1db" stroke-opacity=".55" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+<circle cx="922" cy="384" r="5" fill="#00a1db"/>
+<path d="M636 401.0 C770 401.0, 782 478, 922 478" fill="none" stroke="#51b67a" stroke-opacity=".55" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+<circle cx="922" cy="478" r="5" fill="#51b67a"/>
+<path d="M636 501.0 C770 501.0, 782 560, 922 560" fill="none" stroke="#de8a3a" stroke-opacity=".55" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+<circle cx="922" cy="560" r="5" fill="#de8a3a"/>
+<path d="M636 601.0 C770 601.0, 782 653, 922 653" fill="none" stroke="#c7a01e" stroke-opacity=".55" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+<circle cx="922" cy="653" r="5" fill="#c7a01e"/>
+</svg>
